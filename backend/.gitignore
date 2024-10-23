@@ -1,1 +1,4 @@
 .venv
+embeddings/data/raw_data.json
+embeddings/data/raw_ranked_data.json
+embeddings/data/raw_unranked_data.json
