@@ -2,3 +2,6 @@
 embeddings/data/raw_data.json
 embeddings/data/raw_ranked_data.json
 embeddings/data/raw_unranked_data.json
+embeddings/data/embeddings_dataframe.csv
+embeddings/data/embeddings_data.json
+embeddings/data/faiss_index.index
