@@ -5,3 +5,5 @@ embeddings/data/raw_unranked_data.json
 embeddings/data/embeddings_dataframe.csv
 embeddings/data/embeddings_data.json
 embeddings/data/faiss_index.index
+notes.txt
+backend/api/rough.ipynb
