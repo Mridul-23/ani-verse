@@ -1,2 +1,3 @@
 webscapper-2.0/.venv/
+webscapper-2.0/crawler2/*.json
 *__pycache__*
