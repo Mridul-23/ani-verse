@@ -1,2 +1,0 @@
-anime_images = response.xpath("//div[@class='picSurround']//a//img//@data-src").getall()
-role_characters = response.xpath("//div[@class='js-chara-roll-and-name']//text()").getall()

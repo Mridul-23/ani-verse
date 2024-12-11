@@ -9,8 +9,7 @@ import scrapy
 class Crawler2Item(scrapy.Item):
     
     # the fields for item:
-    # Commented the fields on the requirements
-    # (current active fields are for img_crawler.py )
+
 
     name_english = scrapy.Field()
     name = scrapy.Field()
@@ -35,12 +34,13 @@ class Crawler2Item(scrapy.Item):
     favorites = scrapy.Field()
     aired = scrapy.Field()
     source = scrapy.Field()
+    themes = scrapy.Field()
     watching = scrapy.Field()
     completed = scrapy.Field()
     on_hold = scrapy.Field()
     dropped = scrapy.Field()
     plan_to_watch = scrapy.Field()
-    total= scrapy.Field()
+    total = scrapy.Field()
     scored_10_by = scrapy.Field()
     scored_9_by = scrapy.Field()
     scored_8_by = scrapy.Field()
