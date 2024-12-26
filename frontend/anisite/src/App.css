@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+/* Global Styles */
+::-webkit-scrollbar {
+    display: none;
+}
+
+*::selection {
+    background: #830080;
+    color: aliceblue;
+}
+
+body{
+    background-color: #0f0f0f;
+    overflow-x: hidden;
+    font-family: Poppins, Arial;
+    /* transform: scale(0.99);
+    transform-origin: 0 0; */
+}
+
+/* Gradient Animation */
+.text-gradient {
+    font-size: 1.65rem;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    color: whitesmoke;
+    text-transform: uppercase;
+    font-family: "Montserrat";
+}
+
+.text-gradient:hover {
+    background: linear-gradient(45deg, #FF6A00, #FF0099, #8A2BE2, #00CFFF, #FF6A00, #FF0099, #8A2BE2, #00CFFF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 400% 400%;
+    transition: all 0.5s ease;
+    animation: flowingGradient 2s linear infinite;
+}
+
+@keyframes flowingGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    99.9% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+
+}

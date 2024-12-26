@@ -1,11 +1,12 @@
 import scrapy
 from crawler2.items import Crawler2Item
+import re
 
 
 class MaincrawlerSpider(scrapy.Spider):
     name = "maincrawler"
     allowed_domains = ["myanimelist.net"]
-    start_urls = [f"https://myanimelist.net/topanime.php?limit={50*i}" for i in range(1, 500)]
+    start_urls = [f"https://myanimelist.net/topanime.php?limit={50*i}" for i in range(501, 554)]
     
     custom_settings = {
         'CONCURRENT_REQUESTS': 2,
@@ -43,7 +44,32 @@ class MaincrawlerSpider(scrapy.Spider):
 
         item['members'] = response.xpath("//div[@id='contentWrapper']//div[@id='content']//div[@class='stats-block po-r clearfix']//div[@class='di-ib ml12 pl20 pt8']/span[3]/strong/text()").get()
 
-        item['synopsis'] = response.xpath("//div[@id='contentWrapper']//div[@id='content']//p[@itemprop='description']/text()[normalize-space()]").getall()
+        synopsis = response.xpath("//div[@id='contentWrapper']//div[@id='content']//p[@itemprop='description']/text()[normalize-space()]").getall()
+        if synopsis:
+            synopsis = [re.sub(r'\s+', ' ', syn.strip()) for syn in synopsis]
+            synopsis = " ".join(synopsis).strip()
+            synopsis = synopsis.replace("\"", "")
+
+            # Check for placeholder or invalid synopsis
+            placeholder_synopsis = "No synopsis information has been added to this title. Help improve our database by adding a synopsis ."
+            if synopsis == placeholder_synopsis:
+                self.logger.info(f"Dropping item due to placeholder synopsis: {response.url}")
+                return None
+
+            # Remove trailing brackets/parentheses
+            pattern = r'[\[\(][^\[\(]*[\]\)]$'
+            if synopsis.endswith(']') or synopsis.endswith(')'):
+                synopsis = re.sub(pattern, '', synopsis)
+
+            # Check for short synopsis
+            if len(synopsis) <= 100:
+                self.logger.info(f"Dropping item due to short synopsis: {response.url}")
+                return None
+
+            item['synopsis'] = synopsis
+        else:
+            self.logger.info(f"Dropping item due to missing synopsis: {response.url}")
+            return None
 
         item['synonyms'] = response.xpath("//div[@id='content']/table//td[@class='borderClass']//div[@class='spaceit_pad']/span/following-sibling::text()").get()
 

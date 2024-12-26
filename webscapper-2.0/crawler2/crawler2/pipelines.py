@@ -109,7 +109,7 @@ class CleanAnimeDataPipeline:
         
 
         # Clean ranked
-        if 'ranked' in item and item['ranked'] is not None :
+        if 'ranked' in item and item['ranked'] is not None and item['ranked'] != "N/A":
             item['ranked'] = int((item['ranked'].strip()).replace('#',''))
         
 
@@ -125,25 +125,7 @@ class CleanAnimeDataPipeline:
 
         # Clean synopsis
         if 'synopsis' in item and item['synopsis'] is not None:
-            item['synopsis'] = [re.sub(r'\s+', ' ', syn.strip()) for syn in item['synopsis']]
-            item['synopsis'] = " ".join(item['synopsis'])
-            item['synopsis'] = item['synopsis'].replace("\"", "")
-
-            pattern = r'[\[\(][^\[\(]*[\]\)]$'
-            synopsis = item['synopsis'].strip()
-            
-            if synopsis == "No synopsis information has been added to this title. Help improve our database by adding a synopsis .":
-                raise DropItem(f"Skipping item due to placeholder synopsis: {item}")
-            
-            if synopsis.endswith(']') or synopsis.endswith(')'):
-                synopsis = re.sub(pattern, '', synopsis)
-            
-            if len(synopsis) <= 100:
-                raise DropItem(f"Skipping item due to short synopsis: {item}")
-            
-            item['synopsis'] = synopsis.strip()
-        else:
-            raise DropItem(f"Skipping item due to missing synopsis: {item}")
+            item['synopsis'] = item['synopsis'].strip()
         
 
         # Clean synonyms
