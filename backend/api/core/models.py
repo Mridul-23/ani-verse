@@ -79,6 +79,16 @@ class TypeOf(models.Model):
     name = models.CharField(max_length=255, unique=True, default='Unknown Type', blank=True)
 
 
+class Picture(models.Model):
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE, related_name="pictures")
+    url = models.URLField()
+
+
+class Character(models.Model):
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE, related_name="characters")
+    name = models.CharField(max_length=200)
+    is_main = models.BooleanField(default=False)  # True for main characters
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
