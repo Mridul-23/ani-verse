@@ -3,14 +3,14 @@ import React from 'react'
 function Hcon({
     captions = "Anime", 
     gradient = {from: "#4292e2", via: "#2894ff", to: "#96eaf6"},
-    flexdir = "flex-row",
+    flex = "flex-row",
     content = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, necessitatibus.",
     content2 = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, necessitatibus."
 
 }) {
   return (
     <>
-      <div className={`mx-4 shadow-md w-[100%] flex items-center justify-center ${flexdir}`}>
+      <div className={`mx-4 shadow-md w-[100%] flex items-center justify-center ${flex}`}>
 
         <div aria-description='content' className='flex justify-center items-center mt-8' id='switch-c-1'>
           <p className='text-gray-500 text-center text-lg leading-6 w-[75%] font-semibold font-sans'>

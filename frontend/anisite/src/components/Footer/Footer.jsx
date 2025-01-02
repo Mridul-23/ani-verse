@@ -1,12 +1,13 @@
 import React from 'react';
 import { FaLinkedin, FaTwitter, FaInstagram, FaGithub, FaKaggle } from 'react-icons/fa';
+import "./footer.css"
 
 function Footer() {
   return (
-    <footer className="bg-[#1b1b1b] text-white pt-10 font-sans">
-      <div className="container mx-auto px-4 flex flex-col items-center space-y-6">
+    <footer className="bg-[#1b1b1b] text-white font-sans">
+      <div className="container relative mx-auto px-4 pt-10 flex flex-col items-center gap-6">
 
-        <div className="text-center">
+        <div className="text-center z-10">
           <h1 className="text-3xl font-bold uppercase tracking-wide">
             Aniverse
           </h1>
@@ -15,7 +16,7 @@ function Footer() {
           </p>
         </div>
 
-        <div className="flex space-x-6">
+        <div className="flex z-10 space-x-6">
           <a
             href="https://www.linkedin.com/in/mridul-narula-55338524b/"
             target="_blank"

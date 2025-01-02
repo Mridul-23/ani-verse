@@ -16,6 +16,7 @@ import Explore from "./components/Explore/Explore.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 import Contact from "./components/Contact/Contact.jsx";
 import NotFound from "./components/NotFound/NotFound.jsx";
+import AnimeDetails from "./components/AnimeDetails/AnimeDetails.jsx";
 import Recommendation from "./components/Recommendation/Recommendation.jsx";
 
 
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
       <Route path="contact" element={<Contact />} />
       <Route path="explore" element={<Explore />} />
       <Route path="recommendation" element={<Recommendation />} />
+      <Route path="/anime/details/:id" element={<AnimeDetails />} />
     </Route>
   )
 );

@@ -3,10 +3,10 @@ import React from "react";
 const Button = () => {
   return (
     <button
-      className="bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group"
+      className="bg-[#23252b] text-center w-56 rounded-2xl h-14 relative text-slate-200 text-xl font-semibold group"
       type="button"
     >
-      <div className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500">
+      <div className="bg-green-400 rounded-xl h-12 w-[20%] flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[13.5rem] z-10 duration-500">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 1024"
@@ -23,7 +23,7 @@ const Button = () => {
           />
         </svg>
       </div>
-      <p className="translate-x-2">Go Back</p>
+      <p className="translate-x-2">Back 2 Home</p>
     </button>
   );
 };
