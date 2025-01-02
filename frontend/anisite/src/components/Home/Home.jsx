@@ -1,52 +1,249 @@
 import React from 'react'
 import PFrame from './PFrame'
 import Hcon from './Hcon'
+import GenreSlider from './GenreSlider';
+
+const genres = [
+  {
+    name: "Action",
+    animeList: [
+      {
+        name_english: "Gintama. Slip Arc",
+        ranked: 131,
+        imagelink: "https://cdn.myanimelist.net/images/anime/11/88325.jpg",
+        typeof: "TV",
+        total_episodes: 13.0,
+        genre: ["Action", "Comedy", "Seinen", "Sci-Fi", "Science Fiction", "Ecchi"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+    ],
+  },
+  {
+    name: "Adventure",
+    animeList: [
+      {
+        name_english: "Gintama. Slip Arc",
+        ranked: 131,
+        imagelink: "https://cdn.myanimelist.net/images/anime/11/88325.jpg",
+        typeof: "TV",
+        total_episodes: 13.0,
+        genre: ["Action", "Comedy", "Seinen", "Sci-Fi", "Science Fiction", "Ecchi"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+    ],
+  },
+  {
+    name: "Romance",
+    animeList: [
+      {
+        name_english: "Gintama. Slip Arc",
+        ranked: 131,
+        imagelink: "https://cdn.myanimelist.net/images/anime/11/88325.jpg",
+        typeof: "TV",
+        total_episodes: 13.0,
+        genre: ["Action", "Comedy", "Seinen", "Sci-Fi", "Science Fiction", "Ecchi"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+      {
+        name_english: "Assassination Classroom Second Season",
+        ranked: 149,
+        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
+        typeof: "TV",
+        total_episodes: 25.0,
+        genre: ["Action", "Comedy", "School", "Slice of Life"],
+      },
+    ],
+  },
+];
 
 function Home() {
   return (
-    <div className='flex flex-col items-center'>
-      <PFrame source={"https://img.freepik.com/free-photo/bright-pop-landscape-design_23-2149213461.jpg?t=st=1734532435~exp=1734536035~hmac=d41e5d7de25ced22ffaa772e61cfe8d358e0d242b4f0f008fb188ffe5c325bb7&w=826"} 
-      content={"ANIVERSE"}
+    <main className='mt-[3.75rem] flex flex-col items-center'>
+      <PFrame 
+        images={[
+          {
+            source: "https://images3.alphacoders.com/134/1342304.jpeg",
+            content: "ONE PIECE"
+          },
+          {
+            source: "https://images7.alphacoders.com/633/633122.png",
+            content: "FATE SERIES"
+          },
+          {
+            source: "https://wallpapers-clan.com/wp-content/uploads/2023/11/jojos-bizarre-adventure-jotaro-kujo-dark-desktop-wallpaper-preview.jpg",
+            content: "JOJO'S BIZARRE ADVENTURE"
+          },
+          {
+            source: "https://4kwallpapers.com/images/walls/thumbs_3t/19468.jpg",
+            content: "DANDADAN"
+          },
+          {
+            source: "https://images6.alphacoders.com/135/1358879.png",
+            content: "OVERLORD"
+          },
+          {
+            source: "https://wallpapercave.com/wp/wp12189706.jpg",
+            content: "HAREM IN THE LABYRINTH OF ANOTHER WORLD"
+          },
+          {
+            source: "https://rare-gallery.com/uploads/posts/553567-sword-art-online.jpg",
+            content: "SWORD ART ONLINE"
+          },
+          {
+            source: "https://images.alphacoders.com/136/1362052.png",
+            content: "TENSURA"
+          },
+          {
+            source: "https://images8.alphacoders.com/134/1349635.jpeg",
+            content: "EMINENCE IN SHADOW"
+          },
+        ]}
       />
 
       <Hcon
       captions={"Welcome Senpai"} 
       gradient={{from: "#dc80f3", via: "#c500b8", to: "#ff4364"}}
-      flexdir='flex-col'
+      flex='flex-col gap-10'
       content='Aniverse is your ready to go All-in-One Anime Platform. Discover and Interact with the Anime Community. Get the latest updates on your favorite Anime Series and Movies.'
       content2='Explore the world of Anime with Aniverse'
       />
 
-      <div className=''>
-        <h1 className='text-4xl text-slate-300 font-bold text-center m-8'>
-          Pick Your Show
-        </h1>
-        <div className='flex justify-center space-x-4 m-8'>
-          <div className='bg-gray-800 shadow-md w-[200px] h-[270px] overflow-hidden cursor-pointer'>
-            <img src="https://cdn.myanimelist.net/images/anime/1517/100633l.jpg" alt="Shingeki No Kyojin" 
-              className=' object-center object-cover w-full h-full hover:scale-105 transition-all'  />
-          </div>
-          <div className='bg-gray-800 shadow-md w-[200px] h-[270px] overflow-hidden cursor-pointer'>
-            <img src="https://cdn.myanimelist.net/images/anime/1908/120036l.jpg" alt="Kimetsu No Yaiba" 
-              className=' object-center object-cover w-full h-full hover:scale-105 transition-all'  />
-          </div>
-          <div className='bg-gray-800 shadow-md w-[200px] h-[270px] overflow-hidden cursor-pointer'>
-            <img src="https://cdn.myanimelist.net/images/anime/1011/120243l.jpg" alt="One Piece" 
-              className=' object-center object-cover w-full h-full hover:scale-105 transition-all'  />
-          </div>
-          <div className='bg-gray-800 shadow-md w-[200px] h-[270px] overflow-hidden cursor-pointer'>
-            <img src="https://cdn.myanimelist.net/images/anime/1541/142082l.jpg" alt="Dandadan" 
-              className=' object-center object-cover w-full h-full hover:scale-105 transition-all'  />
-          </div>
-        </div>
-      </div>
+      <GenreSlider genres={genres}/>
 
-      <div>
-        <div>
-          
-        </div>
-      </div>
-    </div>
+    </main>
   )
 }
 
