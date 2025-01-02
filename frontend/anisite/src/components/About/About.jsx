@@ -45,8 +45,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center my-[3.75rem] py-15 px-6">
+      <section className="flex flex-col bg-[#23252b] items-center justify-center text-center py-20 px-6">
         <h1 className="text-4xl font-poppins uppercase mb-4 font-thin">
           About Aniverse
         </h1>
