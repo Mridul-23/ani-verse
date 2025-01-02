@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Anime, Demographic, Genre, Studio, Rating, Source, TypeOf, UserProfile, SavedAnime, WatchLater, Comment
+from .models import Anime, Demographic, Genre, Studio, Rating, Source, TypeOf, UserProfile, SavedAnime, WatchLater, Comment, Picture, Character
 
 
 class SavedAnimeAdmin(admin.ModelAdmin):
@@ -25,3 +25,5 @@ admin.site.register(UserProfile)
 admin.site.register(SavedAnime, SavedAnimeAdmin)
 admin.site.register(WatchLater, WatchLaterAdmin)
 admin.site.register(Comment)
+admin.site.register(Picture)
+admin.site.register(Character)
