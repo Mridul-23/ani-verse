@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 
 
 class Anime(models.Model):
+    unique_id = models.IntegerField(primary_key=True, unique=True)
     name = models.CharField(max_length=255, blank=True)
     name_english = models.CharField(max_length=255, blank=True)
     
@@ -65,7 +66,6 @@ class Demographic(models.Model):
 
 class Genre(models.Model):
     name = models.CharField(max_length=255, unique=True, default='Unknown Genre', blank=True)
-
 
 class Rating(models.Model):
     name = models.CharField(max_length=255, unique=True, default='Unknown Rating', blank=True)

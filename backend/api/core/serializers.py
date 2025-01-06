@@ -1,6 +1,8 @@
-from .models import UserProfile, Anime, Genre
+from .models import Anime
+from profiles_api.models import UserProfile
 
 from rest_framework import serializers
+
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -21,7 +23,7 @@ class GeneralAnimeCardSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Anime
-        fields = ['name_english', 'ranked', 'imagelink', 'typeof', 'total_episodes', 'genre']
+        fields = ['name', 'name_english', 'ranked', 'imagelink', 'typeof', 'total_episodes', 'genre']
     
     def get_genre(self, obj):
         return [genre.name for genre in obj.genre.all()]
@@ -33,4 +35,10 @@ class GeneralAnimeCardSerializer(serializers.ModelSerializer):
 class AnimeSerializer(serializers.ModelSerializer):
     class Meta:
         Model = Anime
-        fields = ['name', 'name_english', 'score', 'ranked', ]
+        fields = ['name', 'name_english', 'score', 'ranked']
+
+
+class SearchRequestAnimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Anime
+        fields = ['name', 'name_english', 'unique_id']
