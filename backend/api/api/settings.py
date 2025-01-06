@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     # apps
     'core',
     'auth_api',
+    'profiles_api',
+    'recommendations_api',
 
     # third party
     'rest_framework',
