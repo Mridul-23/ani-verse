@@ -12,25 +12,6 @@ body {
   overflow-x: hidden;
   font-family: Poppins, Arial;
   
-<<<<<<< HEAD
-=======
-}
-
-body::-webkit-scrollbar {
-  width: 0.75em;
-}
-
-body::-webkit-scrollbar-track {
-  background: #23252b;
-}
-
-body::-webkit-scrollbar-thumb {
-  background: #444444;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-  background: #565656;
->>>>>>> 1b7cc0b895b6ad351c87ff43246c8e297621b501
 }
 
 body::-webkit-scrollbar {

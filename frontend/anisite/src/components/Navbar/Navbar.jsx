@@ -59,11 +59,7 @@ const Navbar = ({
           className='cursor-pointer select-none active:scale-95'
           />
           <Link to="/" className="select-none text-gradient">
-<<<<<<< HEAD
             ANIVERSE </Link>
-=======
-            ANIME </Link>
->>>>>>> 1b7cc0b895b6ad351c87ff43246c8e297621b501
 
         </div>
         <ul className="flex">

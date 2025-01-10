@@ -33,14 +33,10 @@ const router = createBrowserRouter(
       <Route path="profile" element={<Profile />} />
       <Route path="contact" element={<Contact />} />
       <Route path="explore" element={<Explore />} />
-<<<<<<< HEAD
       <Route path="recommendation" element={<Recommendation />} >
         <Route path="start" element={<Start />} />
         <Route path="init" element={<Initialization />} />
       </Route>
-=======
-      <Route path="recommendation" element={<Recommendation />} />
->>>>>>> 1b7cc0b895b6ad351c87ff43246c8e297621b501
       <Route path="/anime/details/:id" element={<AnimeDetails />} />
     </Route>
   )
