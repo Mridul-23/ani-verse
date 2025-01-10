@@ -1,9 +1,7 @@
 import numpy as np
-import pickle
 import faiss
-import ast
 
-from recommendations_api.utils.session_helper import get_user_history, update_user_history
+from recommendations_api.utils.session_helper import get_user_history
 
 from ..models import UserSession
 from core.models import Anime
@@ -23,6 +21,7 @@ def recommend(request):
     # Fetch round number and previous arm from session
     round_no = session.round_no
 
+    print(user_history_dict)
     # Calculate UCB values for each arm
     ucb_values = {}
     for i in range(3):  # Assuming there are 3 arms
@@ -31,26 +30,11 @@ def recommend(request):
         average_rating = sum(ratings) / len(ratings)
         exploration_term = np.sqrt(2 * np.log(round_no) / t) if t > 0 else float('inf')
         ucb_values[i] = average_rating + exploration_term
-        print(f'ucb value for arm {i} -> {average_rating + exploration_term}')
+        # print(f'ucb value for arm {i} -> {average_rating + exploration_term}')
 
     # Select the arm with the highest UCB value
     arm = max(ucb_values, key=ucb_values.get)
-
-    session.previous_arm = arm
-    session.save()
-
-    ''''''
-
-    print('arm: ', arm)
-    print('user_history_dict: ', user_history_dict)
-
-    # return [1, 2, 3]
-
-    ''''''
-
-    '''
-    forword this is the actual loggic skipping it, for now testing the code upto this point
-    '''
+    print("arm", arm)
 
     # Get recommendations for the selected arm
     recommendations = get_new_recommendations(arm, user_history_dict)
@@ -103,8 +87,9 @@ def get_new_recommendations(arm, user_history_dict, num_recommendations=3):
         try:
             # Get the anime object by unique_id from the database
             obj = Anime.objects.get(unique_id=anime_id)
+
             # Reshape each vector_rep to (1, -1) to ensure it's a 2D array
-            reshaped_vector = np.array(ast.literal_eval(obj.vector_rep)).reshape(1, -1)
+            reshaped_vector = np.array(obj.vector_rep).reshape(1, -1)
             query_vectors.append(reshaped_vector)
         except Anime.DoesNotExist:
             print(f"Anime with unique_id {anime_id} not found.")
