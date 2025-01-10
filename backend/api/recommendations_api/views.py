@@ -47,10 +47,7 @@ class GetRecommendationsView(APIView):
     def post(self, request):
         obj = UserSession.objects.get(user=request.user)
         obj.round_no += 1
-        print('here: ', obj.previous_arm)
 
         update_user_history(arm=obj.previous_arm, user=request.user, shows=request.data.get('show_ids'), ratings=request.data.get('show_ratings'))
-
-        print('user history updated: \n', get_user_history(request.user))
 
         return Response({'message': 'recieved response.'}, status=status.HTTP_200_OK)

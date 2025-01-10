@@ -8,6 +8,8 @@ class Anime(models.Model):
     name = models.CharField(max_length=255, blank=True)
     name_english = models.CharField(max_length=255, blank=True)
     
+    vector_rep = models.JSONField(default=[], null=True)
+
     # Statistics
     score = models.FloatField(null=True, blank=True)
     ranked = models.IntegerField(null=True, blank=True)

@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     age = models.IntegerField(blank=True, default=1)
     name = models.CharField(max_length=50, blank=True)
     bio = models.CharField(max_length=500, blank=True)
-    favourite_anime = models.ForeignKey(to='Anime', on_delete=models.CASCADE, null=True,blank=True, related_name='favourite_anime')
+    favourite_anime = models.ForeignKey(Anime, on_delete=models.CASCADE, null=True,blank=True, related_name='favourite_anime')
 
     REQUIRED_FIELDS = ['age']
 
@@ -43,7 +43,7 @@ class SavedAnime(models.Model):
 
 class WatchLater(models.Model):
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    anime = models.ForeignKey(to='Anime', on_delete=models.CASCADE)
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
