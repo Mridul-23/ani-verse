@@ -1,53 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
 /* Global Styles */
-::-webkit-scrollbar {
-    display: none;
-}
 
 *::selection {
-    background: #830080;
-    color: aliceblue;
+  background: #9e009c;
+  color: aliceblue;
 }
 
-body{
-    background-color: #0f0f0f;
-    overflow-x: hidden;
-    font-family: Poppins, Arial;
-    /* transform: scale(0.99);
-    transform-origin: 0 0; */
+body {
+  background-color: #0f0f0f;
+  overflow-x: hidden;
+  font-family: Poppins, Arial;
+  
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+/* 
+body::-webkit-scrollbar-track {
+  background: #23252b;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #444444;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #565656;
+} */
 
 /* Gradient Animation */
 .text-gradient {
-    font-size: 1.65rem;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    color: whitesmoke;
-    text-transform: uppercase;
-    font-family: "Montserrat";
+  font-size: 1.65rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  color: whitesmoke;
+  text-transform: uppercase;
+  font-family: "Montserrat";
 }
 
 .text-gradient:hover {
-    background: linear-gradient(45deg, #FF6A00, #FF0099, #8A2BE2, #00CFFF, #FF6A00, #FF0099, #8A2BE2, #00CFFF);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    background-size: 400% 400%;
-    transition: all 0.5s ease;
-    animation: flowingGradient 2s linear infinite;
+  background: linear-gradient(
+    45deg,
+    #ff6a00,
+    #ff0099,
+    #8a2be2,
+    #00cfff,
+    #ff6a00,
+    #ff0099,
+    #8a2be2,
+    #00cfff
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 400% 400%;
+  transition: all 0.5s ease;
+  animation: flowingGradient 2s linear infinite;
 }
 
 @keyframes flowingGradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    99.9% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-
+  0% {
+    background-position: 0% 50%;
+  }
+  99.9% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

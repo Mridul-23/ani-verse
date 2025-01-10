@@ -46,7 +46,7 @@ function MenuDrawer({ menuOn, swapMenu }) {
         </li>
         <li>
           <Link
-            to="/recommendation"
+            to="/recommendation/init"
             className="flex items-center space-x-3 text-gray-400 hover:text-white"
             onClick={swapMenu}
           >

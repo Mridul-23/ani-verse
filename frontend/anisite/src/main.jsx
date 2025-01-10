@@ -15,8 +15,11 @@ import Search from "./components/Search/Search.jsx";
 import Explore from "./components/Explore/Explore.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 import Contact from "./components/Contact/Contact.jsx";
+import Start from "./components/Recommendation/Start.jsx";
 import NotFound from "./components/NotFound/NotFound.jsx";
+import AnimeDetails from "./components/AnimeDetails/AnimeDetails.jsx";
 import Recommendation from "./components/Recommendation/Recommendation.jsx";
+import Initialization from "./components/Recommendation/Initialization.jsx";
 
 
 const router = createBrowserRouter(
@@ -30,7 +33,11 @@ const router = createBrowserRouter(
       <Route path="profile" element={<Profile />} />
       <Route path="contact" element={<Contact />} />
       <Route path="explore" element={<Explore />} />
-      <Route path="recommendation" element={<Recommendation />} />
+      <Route path="recommendation" element={<Recommendation />} >
+        <Route path="start" element={<Start />} />
+        <Route path="init" element={<Initialization />} />
+      </Route>
+      <Route path="/anime/details/:id" element={<AnimeDetails />} />
     </Route>
   )
 );
