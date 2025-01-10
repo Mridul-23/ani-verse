@@ -2,194 +2,16 @@ import React from 'react'
 import PFrame from './PFrame'
 import Hcon from './Hcon'
 import GenreSlider from './GenreSlider';
-
-const genres = [
-  {
-    name: "Action",
-    animeList: [
-      {
-        name_english: "Gintama. Slip Arc",
-        ranked: 131,
-        imagelink: "https://cdn.myanimelist.net/images/anime/11/88325.jpg",
-        typeof: "TV",
-        total_episodes: 13.0,
-        genre: ["Action", "Comedy", "Seinen", "Sci-Fi", "Science Fiction", "Ecchi"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-    ],
-  },
-  {
-    name: "Adventure",
-    animeList: [
-      {
-        name_english: "Gintama. Slip Arc",
-        ranked: 131,
-        imagelink: "https://cdn.myanimelist.net/images/anime/11/88325.jpg",
-        typeof: "TV",
-        total_episodes: 13.0,
-        genre: ["Action", "Comedy", "Seinen", "Sci-Fi", "Science Fiction", "Ecchi"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-    ],
-  },
-  {
-    name: "Romance",
-    animeList: [
-      {
-        name_english: "Gintama. Slip Arc",
-        ranked: 131,
-        imagelink: "https://cdn.myanimelist.net/images/anime/11/88325.jpg",
-        typeof: "TV",
-        total_episodes: 13.0,
-        genre: ["Action", "Comedy", "Seinen", "Sci-Fi", "Science Fiction", "Ecchi"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-      {
-        name_english: "Assassination Classroom Second Season",
-        ranked: 149,
-        imagelink: "https://cdn.myanimelist.net/images/anime/8/77966.jpg",
-        typeof: "TV",
-        total_episodes: 25.0,
-        genre: ["Action", "Comedy", "School", "Slice of Life"],
-      },
-    ],
-  },
-];
+import useGenreLoader from '../../hooks/useGenreLoader';
 
 function Home() {
+  const { genreAnimeList } = useGenreLoader([
+    "action",
+    "adventure",
+    "fantasy",
+    "romance",
+  ]);
+
   return (
     <main className='mt-[3.75rem] flex flex-col items-center'>
       <PFrame 
@@ -241,10 +63,10 @@ function Home() {
       content2='Explore the world of Anime with Aniverse'
       />
 
-      <GenreSlider genres={genres}/>
+      <GenreSlider genres={genreAnimeList}/>
 
     </main>
   )
 }
 
-export default Home
+export default Home;

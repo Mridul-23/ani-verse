@@ -1,11 +1,12 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 function Recommendation() {
   return (
-    <div className='flex text-gradient h-screen justify-center items-center'>
-      <h1 className='text-6xl'>Recommendations</h1>
-    </div>
+    <>
+      <Outlet />
+    </>
   )
 }
 
-export default Recommendation
+export default Recommendation;
