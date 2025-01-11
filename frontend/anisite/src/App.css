@@ -15,9 +15,9 @@ body {
 }
 
 body::-webkit-scrollbar {
-  width: 0.75em;
+  display: none;
 }
-
+/* 
 body::-webkit-scrollbar-track {
   background: #23252b;
 }
@@ -28,7 +28,7 @@ body::-webkit-scrollbar-thumb {
 
 body::-webkit-scrollbar-thumb:hover {
   background: #565656;
-}
+} */
 
 /* Gradient Animation */
 .text-gradient {

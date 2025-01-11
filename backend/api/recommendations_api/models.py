@@ -18,3 +18,9 @@ class UserSession(models.Model):
 
     def __str__(self):
         return f"Session for {self.user.username}"
+    
+
+# class UserPreferences(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     genre_preferences = models.JSONField()  # {"action": 0.7, "comedy": 0.2, "romance": 0.1}
+
