@@ -4,7 +4,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from .serializers import GeneralAnimeCardSerializer, SearchRequestAnimeSerializer
+from .serializers import GeneralAnimeCardSerializer, SearchRequestAnimeSerializer, FullAnimeDetailsSerializer
 from .models import Anime
 from .mixins import GenreFilterMixin
 from core.models import Genre
@@ -94,3 +94,25 @@ class SearchAnimeView(ListAPIView):
 
         # Perform search if query is valid
         return Anime.objects.filter(name__icontains=query_str)[:10]
+
+class AnimeDetailView(ListAPIView):
+    """
+    Returns details of a single anime by unique_id.
+
+    Permissions:
+        - AllowAny
+
+    Expects:
+        - Query parameter: /?unique_id=<int>
+    """
+    permission_classes = [AllowAny]
+    serializer_class = FullAnimeDetailsSerializer
+    queryset = Anime.objects.all()
+
+    def get_queryset(self):
+        unique_id = self.request.query_params.get('unique_id', None)
+
+        if unique_id is None:
+            raise ValidationError("The 'unique_id' query parameter is required.")
+
+        return Anime.objects.filter(unique_id=unique_id)
