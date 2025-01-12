@@ -42,3 +42,34 @@ class SearchRequestAnimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Anime
         fields = ['name', 'name_english', 'unique_id']
+
+
+class AnimeDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Anime
+        depth = 1
+        exclude = ['vector_rep']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        # For removing the id field from the related models
+        if 'rating' in representation:
+            representation['rating'] = representation['rating'].get('name')
+
+        if 'studio' in representation:
+            representation['studio'] = representation['studio'].get('name')
+
+        if 'demographic' in representation:
+            representation['demographic'] = representation['demographic'].get('name')
+
+        if 'source' in representation:
+            representation['source'] = representation['source'].get('name')
+
+        if 'typeof' in representation:
+            representation['typeof'] = representation['typeof'].get('name')
+
+        if 'genre' in representation:
+            representation['genre'] = [genre.get('name') for genre in representation['genre']]
+
+        return representation
