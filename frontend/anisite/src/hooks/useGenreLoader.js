@@ -17,9 +17,6 @@ const useGenreLoader = (genres) => {
           name: genres[index],
           animeList: response.data,
         }));
-
-        console.log(data)
-
         setGenreAnimeList(data);
       } catch (err) {
         console.error("Error fetching anime data:", err);
