@@ -72,3 +72,22 @@ body::-webkit-scrollbar-thumb:hover {
     background-position: 0% 50%;
   }
 }
+
+.scroll-none::-webkit-scrollbar {
+  width: 0;
+}
+
+/* Scrollbar for Nav SearchBar */
+.search-scrollbar::-webkit-scrollbar {
+  width: 0.8rem;
+}
+
+.search-scrollbar::-webkit-scrollbar-track {
+  background: #333333;
+  box-shadow: inset 2px 2px 5px #2b2b2b, inset -2px -2px 5px #252525;
+}
+
+.search-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #222222;
+  box-shadow: inset 2px 2px 5px #151515, inset -2px -2px 5px #252525;
+}

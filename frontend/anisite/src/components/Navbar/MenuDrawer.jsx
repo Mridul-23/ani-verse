@@ -9,7 +9,7 @@ function MenuDrawer({ menuOn, swapMenu }) {
     <div
       className={`fixed top-0 left-0 h-full max-w-sm bg-[#23252b] text-white shadow-lg z-50 transform ${
         menuOn ? "translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300 ease-in-out`}
+      } transition-transform duration-300`}
     >
 
       <div className="px-6 py-[0.875rem] border-b text-center border-gray-600 flex items-center space-x-3">
