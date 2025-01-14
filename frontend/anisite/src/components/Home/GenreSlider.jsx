@@ -12,7 +12,7 @@ const GenreSlider = ({ genres }) => {
           <div className="flex overflow-x-auto gap-5 pb-3 scroll-smooth custom-scrollbar">
             {genre.animeList.map((anime, animeIndex) => (
               <Link 
-                to={`/anime/details/${anime.name_english.replace(/\s+/g, "-").toLowerCase()}`}
+                to={`/anime/details/${anime.unique_id}`}
                 className="relative group"
                 key={animeIndex}
                 title={anime.name_english}

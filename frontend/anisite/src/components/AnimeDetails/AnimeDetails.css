@@ -1,0 +1,18 @@
+.sub-main-bg {
+  border-radius: 20px;
+  box-shadow: 
+      6px 6px 16px rgba(0, 0, 0, 0.8), 
+      -6px -6px 16px rgba(0, 0, 0, 0.1);
+
+
+}
+.sub-text-bg {
+  border-radius: 20px;
+  -webkit-user-select: none;
+  user-select: none;
+  box-shadow: 
+      2px 2px 12px rgba(0, 0, 0, 0.5), 
+      -2px -2px 12px rgba(0, 0, 0, 0.05);
+  color: #fff;
+
+}

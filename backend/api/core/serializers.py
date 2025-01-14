@@ -29,7 +29,7 @@ class GeneralAnimeCardSerializer(serializers.ModelSerializer):
     
     def get_typeof(self, obj):
         return obj.typeof.name
-    
+
 
 class AnimeSerializer(serializers.ModelSerializer):
     class Meta:
