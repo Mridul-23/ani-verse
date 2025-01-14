@@ -120,7 +120,7 @@ def get_new_recommendations(arm, user_history_dict, num_recommendations=3):
 
 
 
-def get_faiss_recommendations(vector, n_rec=11):
+def get_faiss_recommendations(vector, n_rec=13):
     index = faiss.read_index(r'C:\Users\22213\OneDrive\Desktop\ani-verse\backend\api\recommendations_api\data\faiss_index.index')
 
     vector = np.array(vector).reshape(1, -1)

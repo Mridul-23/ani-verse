@@ -1,4 +1,4 @@
-from .models import Anime, Studio, Demographic, Genre, Rating, Source, TypeOf
+from .models import Anime
 from profiles_api.models import UserProfile
 
 from rest_framework import serializers
@@ -14,7 +14,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         if value < 1 or value > 100:
             raise serializers.ValidationError('Age must be between 1 and 100.')
         return value
-
 
 
 class GeneralAnimeCardSerializer(serializers.ModelSerializer):

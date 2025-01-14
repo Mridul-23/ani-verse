@@ -11,9 +11,9 @@ class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     age = models.IntegerField(blank=True, default=1)
     name = models.CharField(max_length=50, blank=True)
-    bio = models.CharField(max_length=500, blank=True)
+    bio = models.CharField(max_length=100, blank=True)
     pfp = models.ImageField(upload_to='profile_pictures/', blank=True)
-    favourite_anime = models.ForeignKey(Anime, on_delete=models.CASCADE, null=True,blank=True, related_name='favourite_anime')
+    favourite_anime = models.OneToOneField(Anime, on_delete=models.CASCADE, blank=True, null=True)
 
     REQUIRED_FIELDS = ['age']
 

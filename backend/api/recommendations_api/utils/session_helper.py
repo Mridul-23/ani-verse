@@ -67,10 +67,6 @@ def get_user_history(user):
     }
     return user_history
 
-def update_user_session(user, session_data):
-    pass
-
-
 def update_user_history(user, arm, ratings, shows):
     # Fetch the user's history for the given arm
     history = UserRecommendationHistory.objects.filter(user=user, arm=arm).first()
