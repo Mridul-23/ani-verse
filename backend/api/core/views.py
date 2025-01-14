@@ -82,7 +82,7 @@ class SearchAnimeView(ListAPIView):
         - Query parameter: /?anime_name=<search_string>
     """
     permission_classes = [AllowAny]
-    serializer_class = SearchRequestAnimeSerializer
+    serializer_class = GeneralAnimeCardSerializer
     queryset = Anime.objects.all()
 
     def get_queryset(self):
@@ -93,7 +93,7 @@ class SearchAnimeView(ListAPIView):
             raise ValidationError("The 'anime_name' query parameter is required.")
 
         # Perform search if query is valid
-        return Anime.objects.filter(name__icontains=query_str)[:10]
+        return Anime.objects.filter(name_english__icontains=query_str)[:10]
 
 
 class GetAnimeById(ListAPIView):
