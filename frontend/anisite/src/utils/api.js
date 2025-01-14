@@ -22,3 +22,12 @@ export const searchAnime = async (str) => {
     throw new Error('Failed to fetch anime details: ' + error.message);
   }
 };
+
+// export const searchAnimeResults = async (str) => {
+//   try {
+//     const response = await api.get(`/search_anime_results/?anime_name=${str}`);
+//     return response.data;
+//   } catch (error) {
+//     throw new Error('Failed to fetch anime details: ' + error.message);
+//   }
+// };
