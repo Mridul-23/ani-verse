@@ -15,7 +15,6 @@ import Login from "./components/Auth/Login.jsx";
 import About from "./components/About/About.jsx";
 import Search from "./components/Search/Search.jsx";
 import Register from "./components/Auth/Register.jsx";
-import Explore from "./components/Explore/Explore.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 import Contact from "./components/Contact/Contact.jsx";
 import Start from "./components/Recommendation/Start.jsx";
@@ -30,7 +29,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="*" element={<NotFound />} />
       <Route path="about" element={<About />} />
-      <Route path="search" element={<Search />} />
+      <Route path="explore" element={<Search />} />
       <Route
         path="profile"
         element={
@@ -40,7 +39,6 @@ const router = createBrowserRouter(
         }
       />
       <Route path="contact" element={<Contact />} />
-      <Route path="explore" element={<Explore />} />
       <Route path="auth" element={<Auth />}>
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />

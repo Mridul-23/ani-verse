@@ -1,0 +1,12 @@
+.group:hover .overlay-1 {
+  transform: scale(1);
+  transition: transform 0.15s ease-in-out;
+}
+
+.group .overlay-hover {
+  transition: opacity 0.15s ease-in-out;
+}
+
+.group:hover .overlay-hover {
+  opacity: 1;
+}
