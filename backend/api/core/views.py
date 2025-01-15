@@ -71,6 +71,31 @@ class ShowsByGenre(GenreFilterMixin, ListAPIView):
         return super().list(request, *args, **kwargs)
 
 
+class ExplorePageAnimeView(ListAPIView):
+    """
+    Searches anime by name and returns a list of matching results.
+
+    Permissions:
+        - AllowAny
+    
+    Expects:
+        - Query parameter: /?anime_name=<search_string>
+    """
+    permission_classes = [AllowAny]
+    serializer_class = GeneralAnimeCardSerializer
+    queryset = Anime.objects.all()
+
+    def get_queryset(self):
+        query_str = self.request.query_params.get('anime_name', '')
+
+        # Validation: Ensure the search query is not empty
+        if not query_str:
+            raise ValidationError("The 'anime_name' query parameter is required.")
+
+        # Perform search if query is valid
+        return Anime.objects.filter(name_english__icontains=query_str)[:15]
+
+
 class SearchAnimeView(ListAPIView):
     """
     Searches anime by name and returns a list of matching results.
@@ -93,7 +118,8 @@ class SearchAnimeView(ListAPIView):
             raise ValidationError("The 'anime_name' query parameter is required.")
 
         # Perform search if query is valid
-        return Anime.objects.filter(name__icontains=query_str)[:10]
+        return Anime.objects.filter(name_english__icontains=query_str)[:6]
+
 
 
 class GetAnimeById(ListAPIView):
