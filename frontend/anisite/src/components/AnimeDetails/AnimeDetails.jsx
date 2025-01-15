@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { getAnimeDetails } from "../../utils/api";
 import { useParams } from "react-router-dom";
+import { FcLikePlaceholder, FcLike } from "react-icons/fc";
+
 import "./AnimeDetails.css";
 
 const AnimeDetails = () => {
   const { id } = useParams();
   const [anime, setAnime] = useState({});
+  const [fav, setFav] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const favToggle = () => {
+    setFav(!fav);
+  };
 
   useEffect(() => {
     const fetchAnimeDetails = async () => {
@@ -58,7 +65,15 @@ const AnimeDetails = () => {
 
           {/* Anime Details */}
           <div className="flex-1">
-            <h1 className="text-4xl font-bold mb-2">{anime.name_english || "Unknown Anime"}</h1>
+            <div className="flex justify-between items-center flex-row gap-8">
+              <h1 className="text-4xl font-bold uppercase mb-2">{anime.name_english || "Unknown Anime"}</h1>
+              <div className="flex items-center  gap-1 border p-2 text-sm rounded-lg border-slate-400 active:scale-[0.97] transform transition duration-300 cursor-pointer select-none"
+              onClick={favToggle}
+              >
+              {!fav ? <FcLike size={15}/> : <FcLikePlaceholder size={15}/>}
+                <span>Add To Favorites</span>
+              </div>
+            </div>
             <p className="text-gray-400 mb-4"> Original Name: <em>{anime.name || "No English Title"}</em> </p>
             <div className="flex flex-wrap mb-4 space-x-2">
               <span className=" sub-text-bg active:shadow-none cursor-default text-sm px-3 py-1 rounded-full">

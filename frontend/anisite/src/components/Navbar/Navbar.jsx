@@ -9,7 +9,6 @@ import MenuDrawer from './MenuDrawer';
 import useAuth from '../../hooks/useAuth';
 import { searchAnime } from '../../utils/api';
 import useDebounce from '../../hooks/useDebounce';
-import "./Nav.css"
 
 const Navbar = () => {
   const [menuOn, setMenuOn] = useState(false);
