@@ -4,6 +4,26 @@ import { useNavigate } from "react-router-dom";
 
 const Initialization = () => {
   const navigate = useNavigate()
+
+  // Auto complete search
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState([]);
+
+  const fetchAnimeList = async () => {
+    if (search.length != 0) {
+      try {
+        const animeData = await searchAnime(search);
+        setResults(animeData);
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      setResults([]);
+      console.log("No search query entered!");
+    }
+  }
+
+  fetchAnimeList();
   const [animes, setAnimes] = useState([
     { name: "", rating: "" },
     { name: "", rating: "" },
@@ -22,13 +42,6 @@ const Initialization = () => {
 
   const handleSubmit = async () => {
     try {
-      const getResponse = await axios.get("https://128.0.0.1:8000/start_recommendations", {
-        params: { animes: JSON.stringify(animes) },
-      });
-
-      if (getResponse.status === 200) {
-        console.log("GET response received:", getResponse.data);
-
         const postResponse = await axios.post(
           "https://128.0.0.1:8000/start_recommendations_data",
           {
@@ -43,9 +56,6 @@ const Initialization = () => {
         } else {
           alert("Error in POST request!");
         }
-      } else {
-        alert("Error in GET request!");
-      }
     } catch (error) {
       console.error("Error occurred during the request flow:", error);
       alert("Something went wrong!");
