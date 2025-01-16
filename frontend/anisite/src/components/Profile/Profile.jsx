@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AnimeListItem from './AnimeListItem';  // Import AnimeListItem component
 
 function Profile() {
   const [userProfileData, setUserProfileData] = useState({});
+  const [toggleShowLists, setToggleShowLists] = useState(true);
 
+  // Fetch user profile data
   const getProfile = async () => {
     const response = await axios.get('http://127.0.0.1:8000/user/', {
       headers: {
@@ -14,17 +17,42 @@ function Profile() {
     setUserProfileData(response.data);
   };
 
+  // Fetch favourite anime
+  const fetchFavourite = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/user/favourite/', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access')}`
+      }
+    });
+
+    setUserProfileData((prev) => ({
+      ...prev,
+      saved_anime: response.data
+    }));
+  };
+  
+  // Fetch watch later anime
+  const fetchWatchLater = async () => {
+    const response = await axios.get('http://127.0.0.1:8000/user/watch_later/', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access')}`
+      }
+    });
+
+    setUserProfileData((prev) => ({
+      ...prev,
+      watchLater_anime: response.data
+    }));
+  };
+
   useEffect(() => {
     getProfile();
+    fetchFavourite();
+    fetchWatchLater();
   }, []);
 
-  console.log(userProfileData)
-
   return (
-
     <div className="flex flex-col mt-14 h-screen w-full bg-gray-800 text-white rounded-lg shadow-xl">
-
-
       <div className="flex p-6">
         <div>
           <div className="w-40 h-40 mx-1">
@@ -43,33 +71,33 @@ function Profile() {
         <div className='flex flex-col'>
           <div className="ml-6 mb-2">
             <h2 className="text-3xl font-semibold">{userProfileData.name}</h2>
-            <p className="text-sm mt-1 overflow-auto scrollbar-hide text-gray-300 h-36 w-[80%]">{userProfileData.bio}</p>
+            <p className="text-sm mt-1 overflow-auto scroll-none text-gray-300 h-36 w-[80%]">{userProfileData.bio}</p>
           </div>
 
-          <div className="px-6 py-4 bg-gray-700 rounded-b-md flex justify-start ml-6 w-[80%]">
-            <div className='w-[50%]'>
-              <h3 className="text-xl font-medium">Favourite Later</h3>
+          <div className="bg-gray-700 rounded-t-md flex justify-start ml-6 w-[95%]">
+            <div className={`w-[50%] px-6 py-4 pr-1 ${toggleShowLists ? 'bg-slate-500 transform transition-transform duration-300' : 'bg-inherit'}`}>
+              <button onClick={() => setToggleShowLists(true)}>
+                <h3 className="text-xl font-medium">Favourite Shows</h3>
+              </button>
             </div>
-            <div className='w-[50%]'>
-              <h3 className="text-xl font-medium">Watch Later</h3>
+            <div className={`w-[50%] px-6 py-4 pr-1 ${toggleShowLists ? 'bg-inherit' : 'bg-slate-500 transform transition-transform duration-300'}`}>
+              <button onClick={() => setToggleShowLists(false)}>
+                <h3 className="text-xl font-medium">Watch Later</h3>
+              </button>
             </div>
           </div>
-          <div className='bg-red-800 h-96 w-[80%] ml-6 overflow-auto'>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
-            <div className='w-full h-20 bg-blue-700 mb-1'></div>
+
+          <div className='h-96 w-[95%] ml-6 overflow-auto scroll-none'>
+            {toggleShowLists && userProfileData?.saved_anime?.map(({anime}) => (
+              <AnimeListItem key={anime.unique_id} anime={anime} />
+            ))}
+
+            {!toggleShowLists && userProfileData?.watchLater_anime?.map(({anime}) => (
+              <AnimeListItem key={anime.unique_id} anime={anime} />
+            ))}
           </div>
         </div>
       </div>
-
-
     </div>
   );
 }
