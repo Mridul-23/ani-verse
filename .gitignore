@@ -2,3 +2,5 @@ webscapper-2.0/.venv/
 webscapper-2.0/*.py
 webscapper-2.0/crawler2/*.json
 *__pycache__*
+backend/api/db.sqlite3
+backend/rough.ipynb

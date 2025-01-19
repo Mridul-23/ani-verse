@@ -7,4 +7,4 @@ embeddings/data/embeddings_data.json
 embeddings/data/faiss_index.index
 notes.txt
 backend/api/rough.ipynb
-backend/api/db.sqlite3
+backend\api\db.sqlite3
