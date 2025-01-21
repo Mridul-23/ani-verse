@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const SearchBar = () => {
   const [search, setSearch] = useState("")
   const [results, setResults] = useState([])
+  const [shown, setShown] = useState(false)
   const debouncedSearch = useDebounce(search, 500)
   
   useEffect(() => {
@@ -26,6 +27,11 @@ const SearchBar = () => {
       resultFetcher();
     }, [debouncedSearch]);
 
+  const handleLink = (anime) => () => {
+    setShown(false)
+    setSearch(anime.name)
+  }
+
   return (
     <div className="relative flex flex-col items-center w-full">
     {/* Search Input */}
@@ -33,7 +39,10 @@ const SearchBar = () => {
       type="text"
       id="search-bar"
       value={search}
-      onChange={(e) => setSearch(e.target.value)}
+      onChange={(e) => { 
+        setSearch(e.target.value);
+        setShown(true);
+      }}
       className="w-96 p-2 text-sm rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-md transition-all"
       placeholder="Search for your favorite anime..."
       autoComplete="off"
@@ -41,7 +50,7 @@ const SearchBar = () => {
     {/* Results Overlay */}
     <div
       className={`absolute top-full mt-2 w-96 rounded-b-xl bg-[#1f1f1f] shadow-xl border border-gray-700 overflow-x-hidden  max-h-[28rem] ${
-        search ? "" : "hidden"
+        (search && shown) ? "" : "hidden"
       } z-50 overflow-scroll ${results.length>0 ? "search-scrollbar" : "scroll-none" } `}
     >
       <ul className="divide-y divide-gray-700">
@@ -53,6 +62,7 @@ const SearchBar = () => {
                 className="flex items-center gap-4 px-4 py-3 hover:bg-[#2a2a2a] transition duration-300"
                 key={animeIndex}
                 title={anime.name_english}
+                onClick={handleLink(anime)}
               >
                 <img
                   src={anime.imagelink}
