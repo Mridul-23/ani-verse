@@ -2,18 +2,27 @@ import React, { useEffect, useState } from "react";
 import { getAnimeDetails } from "../../utils/api";
 import { useParams } from "react-router-dom";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
+import { BsCollection, BsCollectionFill  } from "react-icons/bs";
+import { animeSimpleRecommendation } from "../../utils/api";
 
 import "./AnimeDetails.css";
+import GenreSlider from "../Home/GenreSlider";
 
 const AnimeDetails = () => {
   const { id } = useParams();
   const [anime, setAnime] = useState({});
+  const [recData, setRecData] = useState([])
   const [fav, setFav] = useState(false);
+  const [later, setLater] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const favToggle = () => {
     setFav(!fav);
+  };
+
+  const laterToggle = () => {
+    setLater(!later);
   };
 
   useEffect(() => {
@@ -29,8 +38,28 @@ const AnimeDetails = () => {
       }
     };
 
+    const fetchAnimeRecommendations = async () => {
+      try {
+        const animeRec = await animeSimpleRecommendation(id);
+        console.log(`Rec Data : ${animeRec}`);
+        
+        const finalData = [{
+          name: "",
+          animeList : animeRec
+        }]
+        setRecData(finalData);
+      }
+      catch (err) {
+        console.error(err);
+      }
+    };
+
     fetchAnimeDetails();
+    fetchAnimeRecommendations();
   }, [id]);
+
+  console.log(recData);
+  
 
   if (loading) {
     return (
@@ -53,12 +82,24 @@ const AnimeDetails = () => {
       <div className="max-w-6xl mx-auto bg-slate-800 sub-main-bg rounded-lg shadow-lg p-6">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Anime Image */} 
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 space-y-4 ">
             <img
               src={anime.imagelink}
               alt={anime.name || "Anime Cover"}
               className="w-full lg:w-72 h-auto rounded-lg shadow-lg object-cover"
             />
+            <div className="flex items-center justify-center gap-1 border p-2 text-sm sub-bt-bg border-slate-400 active:scale-[0.97] transform transition duration-300"
+              onClick={favToggle}
+            >
+            {!fav ? <FcLike size={15}/> : <FcLikePlaceholder size={15}/>}
+              <span>Add To Favorites</span>
+            </div>
+            <div className="flex items-center justify-center gap-1 border p-2 text-sm sub-bt-bg border-slate-400 active:scale-[0.97] transform transition duration-300"
+              onClick={laterToggle}
+            >
+            {!later ? <BsCollectionFill size={15} color="#a6bde0"/> : <BsCollectionFill size={15} color="#5396fc"/>}
+              <span>Add To Favorites</span>
+            </div>
           </div>
 
           <div className="bg-gray-700 w-[0.5px] h-96 self-center" />
@@ -67,12 +108,6 @@ const AnimeDetails = () => {
           <div className="flex-1">
             <div className="flex justify-between items-center flex-row gap-8">
               <h1 className="text-4xl font-bold uppercase mb-2">{anime.name_english || "Unknown Anime"}</h1>
-              <div className="flex items-center  gap-1 border p-2 text-sm rounded-lg border-slate-400 active:scale-[0.97] transform transition duration-300 cursor-pointer select-none"
-              onClick={favToggle}
-              >
-              {!fav ? <FcLike size={15}/> : <FcLikePlaceholder size={15}/>}
-                <span>Add To Favorites</span>
-              </div>
             </div>
             <p className="text-gray-400 mb-4"> Original Name: <em>{anime.name || "No English Title"}</em> </p>
             <div className="flex flex-wrap mb-4 space-x-2">
@@ -155,6 +190,14 @@ const AnimeDetails = () => {
         </div>
 
         <div className=" mt-10 bg-gray-700 w-full h-[0.5px]" />
+
+        <div className="">
+          <GenreSlider genres={recData}
+          heading={`Anime Similar to ${anime.name_english}`}
+          head_size="2"
+          styles="w-auto bg-transparent"
+          />
+        </div>
 
       </div>
     </div>

@@ -91,3 +91,9 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: #222222;
   box-shadow: inset 2px 2px 5px #151515, inset -2px -2px 5px #252525;
 }
+
+.init-grad{
+  background: linear-gradient(145deg, #23262b, #2a2d33);
+  box-shadow:  14px 14px 32px #1b1d21,
+              -14px -14px 32px #1b1d21;
+}
