@@ -1,8 +1,9 @@
-from .models import UserProfile
+from .models import UserProfile, SavedAnime, WatchLater
 
 from rest_framework import serializers
 
 from core.models import Anime
+from core.serializers import GeneralAnimeCardSerializer
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -21,3 +22,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     def get_favourite_anime(self, obj):
         return obj.favourite_anime.name
+    
+class SavedAnimeSerializer(serializers.ModelSerializer):
+
+    anime = GeneralAnimeCardSerializer()
+
+    class Meta:
+        model = SavedAnime
+        fields = ['id', 'saved_at', 'anime']
+    
