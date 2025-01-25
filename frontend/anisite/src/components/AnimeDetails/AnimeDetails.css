@@ -16,3 +16,13 @@
   color: #fff;
 
 }
+.sub-bt-bg {
+  border-radius: 0.5rem;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  box-shadow: 
+      2px 2px 12px rgba(0, 0, 0, 0.5), 
+      -2px -2px 12px rgba(0, 0, 0, 0.05);
+  color: #fff;
+}

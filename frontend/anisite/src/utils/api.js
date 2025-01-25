@@ -16,6 +16,15 @@ export const getAnimeDetails = async (id) => {
 
 export const searchAnime = async (str) => {
   try {
+    const response = await api.get(`/explore_search/?anime_name=${str}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch anime details: ' + error.message);
+  }
+};
+
+export const searchAnimeResults = async (str) => {
+  try {
     const response = await api.get(`/search_anime/?anime_name=${str}`);
     return response.data;
   } catch (error) {
@@ -23,11 +32,12 @@ export const searchAnime = async (str) => {
   }
 };
 
-// export const searchAnimeResults = async (str) => {
-//   try {
-//     const response = await api.get(`/search_anime_results/?anime_name=${str}`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error('Failed to fetch anime details: ' + error.message);
-//   }
-// };
+export const animeSimpleRecommendation = async (id) => {
+  try {
+    const response = await api.get(`recommendations/simple_recommendations/?id=${id}`);
+    return response.data;
+  }
+  catch (error) {
+    throw new Error('Failed to fetch custom recommendations with error: ' + error.message)
+  }
+}
