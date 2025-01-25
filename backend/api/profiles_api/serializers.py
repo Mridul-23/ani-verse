@@ -1,4 +1,4 @@
-from .models import UserProfile, SavedAnime, WatchLater
+from .models import UserProfile, SavedAnime
 
 from rest_framework import serializers
 
