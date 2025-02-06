@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .models import UserSession
+from .serializers import MABRecommendationsSerializer
 from .utils.recommendation import recommend, get_faiss_recommendations
 from .utils.session_helper import initialize_user_history, delete_user_history_and_session, update_user_history
 
@@ -44,7 +45,11 @@ class GetRecommendationsView(APIView):
         
         recommendation = recommend(request)
 
-        return Response({'recommendations': recommendation}, status=status.HTTP_200_OK)
+        qs =  [Anime.objects.get(unique_id=id) for id in recommendation]
+
+        serializer = MABRecommendationsSerializer(qs, many=True)
+
+        return Response({'recommendations': serializer.data}, status=status.HTTP_200_OK)
 
     def post(self, request):
         obj = UserSession.objects.get(user=request.user)
