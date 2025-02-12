@@ -83,7 +83,7 @@ const Initialization = () => {
 
       if (postResponse.status === 200) {
         console.log("POST response received:", postResponse.data);
-        navigate("/start");
+        navigate("/recommendation/start");
       } else {
         alert("Error in POST request!");
       }
@@ -117,7 +117,7 @@ const Initialization = () => {
             />
             {/* Display search results if there are any */}
             {anime.results.length > 0 && anime.search && (
-              <div className="absolute bg-neutral-800 text-gray-200 rounded mt-10 p-2 z-10 max-h-24 overflow-y-auto">
+              <div className="absolute scroll-none bg-neutral-800 text-gray-200 rounded mt-10 p-2 z-10 max-h-24 overflow-y-auto">
                 {anime.results.map((item) => (
                   <p
                     key={item.id}
