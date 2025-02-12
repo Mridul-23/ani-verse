@@ -3,37 +3,41 @@ from django.core.management.base import BaseCommand
 from core.models import Anime
 
 class Command(BaseCommand):
-    help = 'Update image links in Anime from JSON file'
+    help = 'Bulk update anime images from a JSON file'
 
     def add_arguments(self, parser):
-        parser.add_argument('json_file', type=str, help='Path to the JSON file')
+        parser.add_argument('json_file', type=str, help='Path to the JSON file containing anime images')
 
     def handle(self, *args, **kwargs):
         json_file = kwargs['json_file']
-        
-        # Load JSON data
-        with open(json_file, 'r', encoding='utf-8') as file:
-            data = json.load(file)
-        
-        # Track the number of updates
-        updates = 0
+        update_count = 0
+        skipped_entries = 0
 
-        for entry in data:
-            name_english = entry['name_english']
-            img_link = entry['img']
+        try:
+            with open(json_file, encoding='utf-8') as file:
+                anime_images = json.load(file)
+        except (json.JSONDecodeError, FileNotFoundError) as e:
+            self.stderr.write(f"❌ Error reading JSON file: {e}")
+            return
 
-            if img_link == None:
+        anime_name_map = {anime.name_english.strip(): anime for anime in Anime.objects.all()}
+
+        for entry in anime_images:
+            name_english = entry.get('name_english', '').strip()
+            imagelink = (entry.get('img') or '').strip()
+
+            if not name_english or not imagelink:
+                self.stderr.write(f"⚠️ Skipping entry due to missing fields: {entry}")
+                skipped_entries += 1
                 continue
 
-            # Find all matching Anime objects and update them
-            general_data_entries = Anime.objects.filter(name_english=name_english)
-            if general_data_entries.exists():
-                for general_data in general_data_entries:
-                    general_data.imagelink = img_link
-                    general_data.save()
-                    updates += 1
-                    self.stdout.write(self.style.SUCCESS(f'Updated {name_english} with link {img_link}'))
+            if name_english in anime_name_map:
+                Anime.objects.filter(name_english=name_english).update(imagelink=imagelink)
+                self.stdout.write(f"✅ Updated image for: {name_english}")
+                update_count += 1
             else:
-                self.stdout.write(self.style.WARNING(f'{name_english} not found in database'))
+                self.stderr.write(f"❌ No matching anime found for: {name_english}")
 
-        self.stdout.write(self.style.SUCCESS(f'Successfully updated {updates} records'))
+        self.stdout.write(f"\n🎉 Successfully updated {update_count} anime image URLs.")
+        if skipped_entries:
+            self.stderr.write(f"⚠️ Skipped {skipped_entries} entries due to missing fields.")
