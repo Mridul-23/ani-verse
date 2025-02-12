@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = await axiosInstance.post('/login/', { username, password });
+      const response = await axiosInstance.post('auth/login/', { username, password });
       localStorage.setItem('access', response.data.access);
       localStorage.setItem('refresh', response.data.refresh);
       setUser({ username });
@@ -42,12 +42,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('access');
-    localStorage.removeItem('refresh');
-    setUser(null);
-    navigate('/auth/login');
+  const logout = async () => {
+    try {
+      await axiosInstance.delete('/recommendations/initialize/', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access')}`,
+        },
+      });
+  
+      console.log('User recommendation session deleted.');
+    } catch (error) {
+      console.error('Failed to delete recommendation session:', error);
+    } finally {
+      localStorage.removeItem('access');
+      localStorage.removeItem('refresh');
+      setUser(null);
+      navigate('/auth/login');
+    }
   };
+  
 
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>
