@@ -60,15 +60,6 @@ The project involves scraping MyAnimeList using Scrapy, processing the collected
 │   │   ├── tailwind.config.js
 │   │   └── vite.config.js
 │   └── package-lock.json
-├── rough.py
-└── webscraper-2.0
-    ├── .venv
-    │   ├── Include
-    │   ├── Lib
-    │   ├── Scripts
-    │   └── pyvenv.cfg
-    └── crawler2
-        └── crawler2
 ```
 
 ## Installation Guide
