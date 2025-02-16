@@ -22,6 +22,20 @@ const Initialization = () => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+    try {
+      await axios.delete('http://127.0.0.1:8000/recommendations/initialize/', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access')}`,
+        },
+      })} catch (error) {
+      console.error('Failed to delete recommendation session:', error);
+      }
+    })();
+  }, [])
+  
+
   // Handle input changes for anime name or rating
   const handleInputChange = (index, field, e) => {
     const value = e.target.value;
@@ -117,15 +131,29 @@ const Initialization = () => {
             />
             {/* Display search results if there are any */}
             {anime.results.length > 0 && anime.search && (
-              <div className="absolute scroll-none bg-neutral-800 text-gray-200 rounded mt-10 p-2 z-10 max-h-24 overflow-y-auto">
-                {anime.results.map((item) => (
-                  <p
-                    key={item.id}
-                    onClick={() => handleSelectAnime(index, item.name, item.unique_id)}
-                    className="cursor-pointer hover:bg-neutral-700 w-full px-2 py-1"
-                  >
-                    {item.name}
-                  </p>
+              <div className="absolute search-scrollbar bg-neutral-800 text-gray-200 rounded mt-10 p-2 z-10 max-w-[25rem] max-h-48 overflow-y-auto">
+                {anime.results.map((item, animeIndex) => (
+                  <div
+                  to={`/anime/details/${item.unique_id}`}
+                  className="flex cursor-pointer items-center gap-4 px-4 py-3 hover:bg-[#2a2a2a] transition duration-300"
+                  key={animeIndex}
+                  title={item.name_english}
+                  onClick={() => handleSelectAnime(index, item.name, item.unique_id)}
+                >
+                  <img
+                    src={item.imagelink}
+                    alt={item.name}
+                    className="h-10 w-10 rounded-lg object-cover bg-gray-700"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-semibold text-white">
+                      {item.name}
+                    </span>
+                    <span className="text-xs text-gray-400 italic">
+                      {item.name_english}
+                    </span>
+                  </div>
+                </div>
                 ))}
               </div>
             )}
