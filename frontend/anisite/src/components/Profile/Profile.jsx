@@ -8,7 +8,7 @@ function Profile() {
 
   // Fetch user profile data
   const getProfile = async () => {
-    const response = await axios.get('http://127.0.0.1:8000/user/', {
+    const response = await axios.get('http://127.0.0.1:8000/user/profile/', {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('access')}`
       }

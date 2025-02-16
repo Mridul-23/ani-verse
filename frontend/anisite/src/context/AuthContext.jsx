@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
     if (accessToken && refreshToken) {
       axiosInstance
-        .get('/users/me/')
+        .get('/user/profile/')
         .then((response) => {
           setUser(response.data);
         })
@@ -43,23 +43,21 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+    setUser(null);
+    navigate('/auth/login');
+  
     try {
       await axiosInstance.delete('/recommendations/initialize/', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access')}`,
-        },
+        headers: { Authorization: `Bearer ${localStorage.getItem('access')}` },
       });
-  
       console.log('User recommendation session deleted.');
     } catch (error) {
-      console.error('Failed to delete recommendation session:', error);
-    } finally {
-      localStorage.removeItem('access');
-      localStorage.removeItem('refresh');
-      setUser(null);
-      navigate('/auth/login');
+      console.warn('Failed to delete recommendation session. Probably due to an expired token.');
     }
   };
+  
   
 
   return (
