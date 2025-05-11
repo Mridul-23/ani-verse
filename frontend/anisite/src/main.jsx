@@ -54,7 +54,14 @@ const router = createBrowserRouter(
         <Route path="start" element={<Start />} />
         <Route path="init" element={<Initialization />} />
       </Route>
-      <Route path="/anime/details/:id" element={<AnimeDetails />} />
+      <Route 
+        path="/anime/details/:id" 
+        element={
+          <ProtectedRoute>
+            <AnimeDetails />
+          </ProtectedRoute>
+        }
+      />
     </Route>
   )
 );

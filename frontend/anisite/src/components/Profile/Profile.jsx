@@ -88,12 +88,12 @@ function Profile() {
           </div>
 
           <div className='h-96 w-[95%] ml-6 overflow-auto scroll-none'>
-            {toggleShowLists && userProfileData?.saved_anime?.map(({anime}) => (
-              <AnimeListItem key={anime.unique_id} anime={anime} />
+            {toggleShowLists && userProfileData?.saved_anime?.map((anime) => (
+              <AnimeListItem key={anime.unique_id} anime={anime.anime_details} />
             ))}
 
-            {!toggleShowLists && userProfileData?.watchLater_anime?.map(({anime}) => (
-              <AnimeListItem key={anime.unique_id} anime={anime} />
+            {!toggleShowLists && userProfileData?.watchLater_anime?.map((anime) => (
+              <AnimeListItem key={anime.id} anime={anime.anime_details} />
             ))}
           </div>
         </div>
