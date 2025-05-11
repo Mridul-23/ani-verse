@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { searchAnime } from "../../utils/api";
 import { Link } from "react-router-dom";
 import useDebounce from "../../hooks/useDebounce";

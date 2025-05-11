@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getAnimeDetails } from "../../utils/api";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
@@ -156,7 +156,7 @@ const AnimeDetails = () => {
     }
   }
   useEffect(() => {
-
+    checkStatus();
   }, [favToggle, laterToggle])
   
 
