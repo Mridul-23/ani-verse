@@ -137,7 +137,7 @@ class UserAnimeRemove(APIView):
             return Response({'message': 'Invalid list type.'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            item = model.objects.get(user=3, anime__unique_id=saved_anime_id)
+            item = model.objects.get(user=request.user, anime__unique_id=saved_anime_id)
             item.delete()
             return Response({'message': f'Anime removed from {list_type} list.'}, status=status.HTTP_200_OK)
 

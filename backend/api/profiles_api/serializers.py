@@ -21,7 +21,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return None
     
     def get_favourite_anime(self, obj):
-        return obj.favourite_anime.name
+        if obj.favourite_anime:
+            return obj.favourite_anime.name  
+        return None
     
 class SavedAnimeSerializer(serializers.ModelSerializer):
 
