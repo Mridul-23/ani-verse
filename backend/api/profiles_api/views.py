@@ -143,3 +143,25 @@ class UserAnimeRemove(APIView):
 
         except model.DoesNotExist:
             return Response({'message': 'Anime not found in the specified list.'}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+class CheckListStatus(APIView):
+
+    def post(self, request, id):
+        exist, existsIN = self.checkAnimeList(id)
+
+        return Response({
+            'exist': exist,
+            'existsIn': existsIN
+            }, status=status.HTTP_200_OK)
+
+        
+    def checkAnimeList(self, id):
+        existsIn = []
+        if SavedAnime.objects.filter(id=id).exists():
+            existsIn.append('SavedAnime')
+        if WatchLater.objects.filter(id=id).exists():
+            existsIn.append('WatchLater')
+        
+        return bool(existsIn), existsIn
