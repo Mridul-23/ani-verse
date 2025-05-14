@@ -19,8 +19,6 @@ const AnimeDetails = () => {
   const [error, setError] = useState(null);
 
   const favToggle = async () => {
-    console.log("Toggling favorite for anime ID:", id);
-  
     try {
       if (!fav) {
         // Add to favorites
@@ -35,12 +33,13 @@ const AnimeDetails = () => {
         );
   
         if (response.status === 201 || response.status === 200) {
-          checkStatus();
+          await checkStatus();
         }
       } else {
         const response = await axios.delete(
           `http://127.0.0.1:8000/user/anime/remove/favourite/`,
-          { id : id, anime: anime.unique_id }, {
+          { 
+            data: {id : id, anime: anime.unique_id} , 
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access")}`,
               "Content-Type": "application/json",
@@ -49,7 +48,7 @@ const AnimeDetails = () => {
         );
   
         if (response.status === 200) {
-          checkStatus();
+          await checkStatus();
         }
       }
     } catch (error) {
@@ -61,11 +60,9 @@ const AnimeDetails = () => {
   
 
   const laterToggle = async () => {
-    console.log("Toggling watch later for anime ID:", id);
-
     try {
       if (!later) {
-        // Add to Watch Later 
+        // Add to Watch later
         const response = await axios.post(
           "http://127.0.0.1:8000/user/watch_later/",
           { id : id, anime: anime.unique_id } ,{
@@ -77,14 +74,13 @@ const AnimeDetails = () => {
         );
   
         if (response.status === 201 || response.status === 200) {
-          checkStatus();
-          setWatchLaterId(response.data.id);
+          await checkStatus();
         }
       } else {
         const response = await axios.delete(
           `http://127.0.0.1:8000/user/anime/remove/watch_later/`,
-          {
-            data: { id : id },
+          { 
+            data: {id : id, anime: anime.unique_id} , 
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access")}`,
               "Content-Type": "application/json",
@@ -93,7 +89,7 @@ const AnimeDetails = () => {
         );
   
         if (response.status === 200) {
-          checkStatus();
+          await checkStatus();
         }
       }
     } catch (error) {
@@ -103,62 +99,72 @@ const AnimeDetails = () => {
   };
   
 
-  useEffect(() => {
-    const fetchAnimeDetails = async () => {
-      try {
-        const animeData = await getAnimeDetails(id);
-        setAnime(animeData);
-        setLoading(false);
-      } catch (err) {
-        console.error(err);
-        setError(err.message);
-        setLoading(false);
-      }
-    };
+  const fetchAnimeDetails = async () => {
+    try {
+      const animeData = await getAnimeDetails(id);
+      setAnime(animeData);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
-    const fetchAnimeRecommendations = async () => {
-      try {
-        const animeRec = await animeSimpleRecommendation(id);
+  const fetchAnimeRecommendations = async () => {
+    try {
+      const animeRec = await animeSimpleRecommendation(id);
 
-        const finalData = [
-          {
-            name: "",
-            animeList: animeRec,
-          },
-        ];
-        setRecData(finalData);
-      } catch (err) {
-        console.error(err);
-      }
-    };   
-    
-    fetchAnimeDetails();
-    fetchAnimeRecommendations();
-
-  }, [id]);
+      const finalData = [
+        {
+          name: "",
+          animeList: animeRec,
+        },
+      ];
+      setRecData(finalData);
+    } catch (err) {
+      console.error(err);
+    }
+  };   
 
   // here is the function
-  const checkStatus = async () => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/user/check_status/?id=${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      setFav(response.data.fav);
-      setLater(response.data.later);
-    } catch (error){
-      console.error(`Error in setting the status of ${anime.name}:`, error);
+const checkStatus = async () => {
+  try {
+    const response = await axios.get(
+      `http://127.0.0.1:8000/user/check_status/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access")}`
+        },
+      }
+    );
+    if (response.data.exist) {
+      const lists = response.data.existsIn || [];
+      setFav(lists.includes("SavedAnime"));
+      setLater(lists.includes("WatchLater"));
+    } else {
+      setFav(false);
+      setLater(false);
     }
+  } catch (error) {
+    console.error(`Error in setting the status of ${anime.name}:`, error);
   }
+};
+
   useEffect(() => {
-    checkStatus();
-  }, [favToggle, laterToggle])
-  
+  (async () => {
+    try {
+      await fetchAnimeDetails();
+      await checkStatus();
+      await fetchAnimeRecommendations();
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+      setLoading(false);
+    }
+  })();
+}, [id]);
+
 
   if (loading) {
     return (
