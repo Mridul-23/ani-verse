@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .models import UserProfile, SavedAnime, WatchLater
-from .serializers import UserProfileSerializer, SavedAnimeSerializer
+from .serializers import UserProfileSerializer, SavedAnimeSerializer, WatchLaterAnimeSerializer
 from core.models import Anime
 
 
@@ -75,7 +75,7 @@ class UserWatchLaterShows(generics.ListCreateAPIView):
     - POST: Adds an anime to the "watch later" list.
     """
     
-    serializer_class = SavedAnimeSerializer
+    serializer_class = WatchLaterAnimeSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -147,21 +147,42 @@ class UserAnimeRemove(APIView):
 
 
 class CheckListStatus(APIView):
+    """
+    API view to check whether a given anime (by unique_id) 
+    is in the authenticated user's favorites or watch-later lists.
+    """
+    permission_classes = [IsAuthenticated]
 
-    def post(self, request, id):
-        exist, existsIN = self.checkAnimeList(id)
-
+    def get(self, request, id):
+        """
+        GET /user/check_status/<anime_unique_id>/
+        Returns:
+          {
+            "exist": bool,
+            "existsIn": ["SavedAnime", "WatchLater"]
+          }
+        """
+        exist, existsIn = self.checkAnimeList(request.user, id)
         return Response({
             'exist': exist,
-            'existsIn': existsIN
-            }, status=status.HTTP_200_OK)
+            'existsIn': existsIn
+        }, status=status.HTTP_200_OK)
 
-        
-    def checkAnimeList(self, id):
+    def checkAnimeList(self, user, anime_unique_id):
         existsIn = []
-        if SavedAnime.objects.filter(id=id).exists():
+
+        # Check the user's favorites
+        if SavedAnime.objects.filter(
+            user=user,
+            anime__unique_id=anime_unique_id
+        ).exists():
             existsIn.append('SavedAnime')
-        if WatchLater.objects.filter(id=id).exists():
+
+        # Check the user's watch-later
+        if WatchLater.objects.filter(
+            user=user,
+            anime__unique_id=anime_unique_id
+        ).exists():
             existsIn.append('WatchLater')
-        
+
         return bool(existsIn), existsIn

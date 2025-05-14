@@ -1,4 +1,4 @@
-from .models import UserProfile, SavedAnime
+from .models import UserProfile, SavedAnime, WatchLater
 
 from rest_framework import serializers
 
@@ -25,6 +25,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             return obj.favourite_anime.name  
         return None
     
+
 class SavedAnimeSerializer(serializers.ModelSerializer):
 
     anime = GeneralAnimeCardSerializer(read_only=True)
@@ -48,3 +49,28 @@ class SavedAnimeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'anime': 'Anime already in favorites.'})
 
         return SavedAnime.objects.create(user=user, anime=anime)
+    
+
+class WatchLaterAnimeSerializer(serializers.ModelSerializer):
+
+    anime = GeneralAnimeCardSerializer(read_only=True)
+    id = serializers.IntegerField(write_only=True, required=True)
+
+    class Meta:
+        model = WatchLater
+        fields = ['id', 'anime']
+    
+    def create(self, validated_data):
+        unique_id = validated_data.pop('id')
+        try:
+            anime = Anime.objects.get(unique_id=unique_id)
+        except Anime.DoesNotExist:
+            raise serializers.ValidationError({'id': 'Anime not found.'})
+
+        user = self.context['request'].user
+
+        # Optional: prevent duplicates
+        if WatchLater.objects.filter(user=user, anime=anime).exists():
+            raise serializers.ValidationError({'anime': 'Anime already in Watch Later.'})
+
+        return WatchLater.objects.create(user=user, anime=anime)
