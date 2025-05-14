@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AnimeListItem from './AnimeListItem';  // Import AnimeListItem component
+import AnimeListItem from './AnimeListItem';
 
 function Profile() {
   const [userProfileData, setUserProfileData] = useState({});
@@ -88,12 +88,12 @@ function Profile() {
           </div>
 
           <div className='w-[35rem] ml-6 pb-6'>
-            {toggleShowLists && userProfileData?.saved_anime?.map((anime) => (
-              <AnimeListItem key={anime.unique_id} anime={anime.anime} />
+            {toggleShowLists && userProfileData?.saved_anime?.map((data, aniIndex) => (
+              <AnimeListItem key={aniIndex} anime={data.anime} />
             ))}
 
-            {!toggleShowLists && userProfileData?.watchLater_anime?.map((anime) => (
-              <AnimeListItem key={anime.id} anime={anime.anime} />
+            {!toggleShowLists && userProfileData?.watchLater_anime?.map((data, aniIndex) => (
+              <AnimeListItem key={aniIndex} anime={data.anime} />
             ))}
           </div>
         </div>
