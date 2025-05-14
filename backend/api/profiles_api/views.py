@@ -54,15 +54,7 @@ class UserFavouritesShows(generics.ListCreateAPIView):
         """
         Create a new favorite anime entry if it doesn't already exist.
         """
-        anime_id = self.request.data.get('id', None)
-        if not anime_id:
-            raise ValueError("Anime ID is required.")
-        
-        try:
-            anime = Anime.objects.get(unique_id=anime_id)
-            serializer.save(user=self.request.user, anime=anime)
-        except Anime.DoesNotExist:
-            raise ValueError("Anime not found.")
+        serializer.save(user=self.request.user)
     
     def create(self, request, *args, **kwargs):
         """
@@ -131,23 +123,45 @@ class UserAnimeRemove(APIView):
         """
         Remove an anime from the specified list (either favorites or watch later).
         """
-        saved_anime_id = request.data.get('id', None)
+        saved_anime_id = request.data.get('id')
 
         if not saved_anime_id:
             return Response({'message': 'Anime ID is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            if list_type == "favourite":
-                item = SavedAnime.objects.get(id=saved_anime_id, user=request.user)
-            elif list_type == "watch_later":
-                item = WatchLater.objects.get(id=saved_anime_id, user=request.user)
-            else:
-                return Response({'message': 'Invalid list type.'}, status=status.HTTP_400_BAD_REQUEST)
+        model = None
+        if list_type == "favourite":
+            model = SavedAnime
+        elif list_type == "watch_later":
+            model = WatchLater
+        else:
+            return Response({'message': 'Invalid list type.'}, status=status.HTTP_400_BAD_REQUEST)
 
+        try:
+            item = model.objects.get(user=request.user, anime__unique_id=saved_anime_id)
             item.delete()
             return Response({'message': f'Anime removed from {list_type} list.'}, status=status.HTTP_200_OK)
 
-        except (SavedAnime.DoesNotExist, WatchLater.DoesNotExist):
+        except model.DoesNotExist:
             return Response({'message': 'Anime not found in the specified list.'}, status=status.HTTP_404_NOT_FOUND)
-        except Exception as e:
-            return Response({'message': f'An error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+class CheckListStatus(APIView):
+
+    def post(self, request, id):
+        exist, existsIN = self.checkAnimeList(id)
+
+        return Response({
+            'exist': exist,
+            'existsIn': existsIN
+            }, status=status.HTTP_200_OK)
+
+        
+    def checkAnimeList(self, id):
+        existsIn = []
+        if SavedAnime.objects.filter(id=id).exists():
+            existsIn.append('SavedAnime')
+        if WatchLater.objects.filter(id=id).exists():
+            existsIn.append('WatchLater')
+        
+        return bool(existsIn), existsIn

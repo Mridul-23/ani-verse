@@ -84,6 +84,7 @@ TEMPLATES = [
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
+    'http://localhost:5174',
 ]
 
 WSGI_APPLICATION = 'api.wsgi.application'

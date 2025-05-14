@@ -21,13 +21,30 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return None
     
     def get_favourite_anime(self, obj):
-        return obj.favourite_anime.name
+        if obj.favourite_anime:
+            return obj.favourite_anime.name  
+        return None
     
 class SavedAnimeSerializer(serializers.ModelSerializer):
 
-    anime = GeneralAnimeCardSerializer()
+    anime = GeneralAnimeCardSerializer(read_only=True)
+    id = serializers.IntegerField(write_only=True, required=True)
 
     class Meta:
         model = SavedAnime
         fields = ['id', 'saved_at', 'anime']
     
+    def create(self, validated_data):
+        unique_id = validated_data.pop('id')
+        try:
+            anime = Anime.objects.get(unique_id=unique_id)
+        except Anime.DoesNotExist:
+            raise serializers.ValidationError({'id': 'Anime not found.'})
+
+        user = self.context['request'].user
+
+        # Optional: prevent duplicates
+        if SavedAnime.objects.filter(user=user, anime=anime).exists():
+            raise serializers.ValidationError({'anime': 'Anime already in favorites.'})
+
+        return SavedAnime.objects.create(user=user, anime=anime)

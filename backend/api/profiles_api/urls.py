@@ -6,4 +6,6 @@ urlpatterns = [
     path('favourite/', views.UserFavouritesShows.as_view(), name='user_favourite'),
     path('watch_later/', views.UserWatchLaterShows.as_view(), name='user_watch_later'),
     path('anime/remove/<str:list_type>/', views.UserAnimeRemove.as_view(), name='user_anime_remove'),  # To remove from lists
+
+    path('check_status/<int:id>', views.CheckListStatus.as_view(), name='user_saved_anime_check'),
 ]
