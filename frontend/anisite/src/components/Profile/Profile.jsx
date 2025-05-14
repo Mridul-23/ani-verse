@@ -52,7 +52,7 @@ function Profile() {
   }, []);
 
   return (
-    <div className="flex flex-col mt-14 h-screen w-full bg-gray-800 text-white rounded-lg shadow-xl">
+    <div className="flex flex-col mt-14 w-full bg-gray-800 text-white rounded-lg shadow-xl">
       <div className="flex p-6">
         <div>
           <div className="w-40 h-40 mx-1">
@@ -75,25 +75,25 @@ function Profile() {
           </div>
 
           <div className="bg-gray-700 rounded-t-md flex justify-start ml-6 w-[95%]">
-            <div className={`w-[50%] px-6 py-4 pr-1 ${toggleShowLists ? 'bg-slate-500 transform transition-transform duration-300' : 'bg-inherit'}`}>
+            <div className={`w-[50%] text-center py-4 ${toggleShowLists ? 'bg-slate-500 transition-all duration-300' : 'bg-inherit'}`}>
               <button onClick={() => setToggleShowLists(true)}>
                 <h3 className="text-xl font-medium">Favourite Shows</h3>
               </button>
             </div>
-            <div className={`w-[50%] px-6 py-4 pr-1 ${toggleShowLists ? 'bg-inherit' : 'bg-slate-500 transform transition-transform duration-300'}`}>
+            <div className={`w-[50%] text-center py-4 ${toggleShowLists ? 'bg-inherit' : 'bg-slate-500 transition-all duration-300'}`}>
               <button onClick={() => setToggleShowLists(false)}>
                 <h3 className="text-xl font-medium">Watch Later</h3>
               </button>
             </div>
           </div>
 
-          <div className='h-96 w-[95%] ml-6 overflow-auto scroll-none'>
+          <div className='w-[35rem] ml-6 pb-6'>
             {toggleShowLists && userProfileData?.saved_anime?.map((anime) => (
-              <AnimeListItem key={anime.unique_id} anime={anime.anime_details} />
+              <AnimeListItem key={anime.unique_id} anime={anime.anime} />
             ))}
 
             {!toggleShowLists && userProfileData?.watchLater_anime?.map((anime) => (
-              <AnimeListItem key={anime.id} anime={anime.anime_details} />
+              <AnimeListItem key={anime.id} anime={anime.anime} />
             ))}
           </div>
         </div>
