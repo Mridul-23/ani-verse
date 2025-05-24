@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
-import ProtectedRoute from "./utils/protectedRoute.jsx";
+import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 import "./index.css";
 import App from "./App.jsx";
 import Auth from "./components/Auth/Auth.jsx";
