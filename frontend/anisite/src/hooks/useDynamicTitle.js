@@ -16,7 +16,7 @@ const useDynamicTitle = ({
     "/auth/register": "Register • ANIVERSE",
     "/auth/login": "Login - ANIVERSE",
     "/recommendation": "Recommendations • ANIVERSE",
-    "/recommendation/start": "Start Recommendations • ANIVERSE",
+    "/recommendation/start": "Get Recommendations • ANIVERSE",
     "/recommendation/init": "Initialization • ANIVERSE",
     "/anime/details/:id": "Anime Details • ANIVERSE",
     "*": "404 Not Found • ANIVERSE",
