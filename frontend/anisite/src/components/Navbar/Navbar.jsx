@@ -43,7 +43,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="pl-6 pr-2 shadow-lg fixed top-0 w-full z-30 transition-colors duration-300 text-white bg-[#23252b]"
+      className="pl-6 pr-2 shadow-lg fixed top-0 w-screen z-30 transition-colors duration-300 text-white bg-[#23252b]"
     >
       <MenuDrawer menuOn={menuOn} swapMenu={swapMenu} />
 
@@ -67,24 +67,24 @@ const Navbar = () => {
         <ul className="flex">
           <li className='flex justify-items-center'>
             <NavLink to="/" onClick={offMenu} className={"hover:bg-[#141519] transition duration-300 p-[1.15rem] flex flex-row items-center gap-[0.125rem]"}>
-              <BiHomeAlt2 size={18} /> <span> Home </span>
+              <BiHomeAlt2 size={18} /> <span className='hidden min-[900px]:inline-block'> Home </span>
             </NavLink>
           </li>
           <li className='flex justify-items-center'>
             <NavLink to="/about" onClick={offMenu} className={"hover:bg-[#141519] transition duration-300 p-[1.15rem] flex flex-row items-center gap-[0.125rem]"}>
-              <LuInfo size={18} /> <span> About </span>
+              <LuInfo size={18} /> <span className='hidden min-[900px]:inline-block'> About </span>
             </NavLink>
           </li>
           {authenticated ? (
             <li className='flex justify-items-center'>
               <NavLink to="/" onClick={handleLogout} className={"hover:bg-[#141519] transition duration-300 p-[1.15rem] flex flex-row items-center gap-[0.125rem]"}>
-                <IoIosLogOut size={18} /> <span> Logout </span>
+                <IoIosLogOut size={18} /> <span className='hidden min-[900px]:inline-block'> Logout </span>
               </NavLink>
             </li>
           ) : (
             <li className='flex justify-items-center'>
               <NavLink to="/auth/login" onClick={offMenu} className={"hover:bg-[#141519] transition duration-300 p-[1.15rem] flex flex-row items-center gap-[0.125rem]"}>
-                <VscAccount size={18} /> <span> Login </span>
+                <VscAccount size={18} /> <span className='hidden min-[900px]:inline-block'> Login </span>
               </NavLink>
             </li>
           )}

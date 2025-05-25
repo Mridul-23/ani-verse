@@ -183,7 +183,7 @@ const checkStatus = async () => {
   }
 
   return (
-    <div className="min-h-screen mt-14 bg-gray-900 text-white py-8 px-4">
+    <div className="min-h-screen mt-[3.25rem] min-[900px]:mt-14 bg-gray-900 text-white py-8 px-4">
       <div className="max-w-6xl mx-auto bg-slate-800 sub-main-bg rounded-lg shadow-lg p-6">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Anime Image */}

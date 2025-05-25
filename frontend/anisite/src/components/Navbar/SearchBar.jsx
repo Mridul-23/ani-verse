@@ -33,7 +33,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="relative flex flex-col items-center w-full">
+    <div className="relative hidden md:flex flex-col items-center w-full">
     {/* Search Input */}
     <input
       type="text"

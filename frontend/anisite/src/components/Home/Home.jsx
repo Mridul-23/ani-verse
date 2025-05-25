@@ -13,7 +13,7 @@ function Home() {
   ]);
 
   return (
-    <main className='mt-[3.75rem] flex flex-col items-center'>
+    <main className='mt-[3.25rem] min-[900px]:mt-[3.75rem] flex flex-col items-center'>
       <PFrame 
         images={[
           {
@@ -49,7 +49,7 @@ function Home() {
             content: "TENSURA"
           },
           {
-            source: "https://images8.alphacoders.com/134/1349635.jpeg",
+            source: "https://images2.alphacoders.com/133/1337180.png",
             content: "EMINENCE IN SHADOW"
           },
         ]}
