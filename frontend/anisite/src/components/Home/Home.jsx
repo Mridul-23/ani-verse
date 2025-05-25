@@ -13,7 +13,7 @@ function Home() {
   ]);
 
   return (
-    <main className='mt-[3.25rem] min-[900px]:mt-[3.75rem] flex flex-col items-center'>
+    <main className='mt-[3.25rem] min-[900px]:mt-[3.75rem] w-screen flex flex-col items-center'>
       <PFrame 
         images={[
           {

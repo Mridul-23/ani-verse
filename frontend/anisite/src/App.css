@@ -10,6 +10,7 @@
 body {
   background-color: #0f0f0f;
   overflow-x: hidden;
+  margin: 0;
   font-family: Poppins, Arial;
   
 }
@@ -17,18 +18,11 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-/* 
-body::-webkit-scrollbar-track {
-  background: #23252b;
-}
 
-body::-webkit-scrollbar-thumb {
-  background: #444444;
+#root {
+  position: relative;
+  overflow-x: hidden;
 }
-
-body::-webkit-scrollbar-thumb:hover {
-  background: #565656;
-} */
 
 /* Gradient Animation */
 .text-gradient {
