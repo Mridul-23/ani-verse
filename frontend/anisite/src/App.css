@@ -12,7 +12,6 @@ body {
   overflow-x: hidden;
   margin: 0;
   font-family: Poppins, Arial;
-  
 }
 
 body::-webkit-scrollbar {
@@ -22,6 +21,10 @@ body::-webkit-scrollbar {
 #root {
   position: relative;
   overflow-x: hidden;
+}
+
+.monster {
+  font-family: "Montserrat", sans-serif;
 }
 
 /* Gradient Animation */
