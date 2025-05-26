@@ -1,8 +1,4 @@
-webscapper-2.0/.venv/
-webscapper-2.0/*.py
-webscapper-2.0/crawler2/*.json
-*__pycache__*
-backend/rough.ipynb
-backend/api/db.sqlite3
-backend/rough.ipynb
-backend/api/media/profile_pictures/1149777r.jpg
+backend/.venv
+backend/api/.env
+backend/api/data/*.json
+backend/api/data/*.csv
