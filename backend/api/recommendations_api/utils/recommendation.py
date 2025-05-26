@@ -1,5 +1,7 @@
 import numpy as np
-import faiss
+from django.conf import settings
+
+
 
 from recommendations_api.utils.session_helper import get_user_history
 
@@ -71,7 +73,7 @@ def get_new_recommendations(arm, user_history_dict, num_recommendations=3):
         rec_distances (list): A list of distances to the recommended items.
     """
 
-    index = faiss.read_index(r'C:\Users\22213\OneDrive\Desktop\ani-verse\backend\api\recommendations_api\data\faiss_index.index')
+    index = settings.FAISS_INDEX
     
     recommendations = list()
     rec_distances = list()
@@ -121,7 +123,7 @@ def get_new_recommendations(arm, user_history_dict, num_recommendations=3):
 
 
 def get_faiss_recommendations(vector, n_rec=13):
-    index = faiss.read_index(r'C:\Users\22213\OneDrive\Desktop\ani-verse\backend\api\recommendations_api\data\faiss_index.index')
+    index = settings.FAISS_INDEX
 
     vector = np.array(vector).reshape(1, -1)
 
