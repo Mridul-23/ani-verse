@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom'
 
 function AnimeListItem({ anime }) {
   return (
-
-  <div className='bg-slate-700 rounded-lg shadow-lg'>
-    <Link to={`/anime/details/${anime.unique_id}`} className='w-full h-[7.5rem] mt-4 bg-transparent hover:bg-[#00000011] duration-[250ms] flex items-center rounded-lg flex-wrap sm:flex-nowrap'>
-
-
+    <Link to={`/anime/details/${anime.unique_id}`} className='w-full h-[7.5rem] mt-4 shadow-lg bg-slate-700 hover:bg-[#334155cb] duration-[250ms] flex items-center rounded-lg flex-wrap sm:flex-nowrap'>
       <div className='w-[30%] sm:w-[20%] h-full'>
         <img src={anime.imagelink} alt={anime.name} className='h-[100%] w-full object-cover object-center rounded-l-lg' />
       </div>
@@ -16,7 +12,7 @@ function AnimeListItem({ anime }) {
         <p className='text-xs text-gray-400 text-ellipsis text-nowrap overflow-clip'>{anime.name_english}</p>
 
         {/* Additional Info */}
-        <div className='flex flex-wrap gap-2 mt-[0.35rem]'>
+        <div className='flex flex-wrap gap-2 mt-[0.35rem] overflow-hidden'>
           {anime.genre.slice(0, 3).map((genre, index) => (
             <span key={index} className='text-xs bg-gray-600 px-2 py-1 rounded-full'>{genre}</span>
           ))}
@@ -28,7 +24,6 @@ function AnimeListItem({ anime }) {
         </div>
       </div> 
     </Link>
-  </div>
   );
 }
 
