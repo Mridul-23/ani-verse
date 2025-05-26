@@ -1,21 +1,37 @@
 import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg('');
+
+
     try {
       await login(username, password);
       navigate('/profile');
     } catch (error) {
-      console.error('Login failed from auth component itself:', error);
+    console.error('Login failed:', error);
+
+    if (error.response) {
+      if (error.response.status === 401) {
+        setErrorMsg('Invalid username or password.');
+      } else {
+        setErrorMsg(`Error: ${error.response.status} - ${error.response.statusText}`);
+      }
+    } else {
+      setErrorMsg('Server unreachable. Please try again later.');
     }
+  }
   };
 
   return (
@@ -33,16 +49,22 @@ const Login = () => {
             required
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <label className="block mb-2 text-gray-300" htmlFor="password">Password</label>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded"
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded pr-10"
             required
           />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute transform translate-y-3 -translate-x-6 cursor-pointer text-gray-400"
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
         <button
           type="submit"
@@ -50,7 +72,10 @@ const Login = () => {
         >
           Login
         </button>
-        <p className="text-gray-300 mt-4">
+        {errorMsg && (
+          <p className="text-red-500 text-sm mt-3 text-center">{errorMsg}</p>
+        )}
+        <p className="text-gray-300 text-sm mt-4">
           Don't have an account?{' '}
           <span 
             className="text-blue-400 cursor-pointer" 

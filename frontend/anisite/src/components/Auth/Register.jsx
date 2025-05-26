@@ -1,22 +1,51 @@
 import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axiosInstance from '../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axiosInstance.post('auth/register/', { username, password });
-      navigate('../login');
-    } catch (err) {
-      setError(err.response?.data?.error || 'Registration failed');
+  e.preventDefault();
+  setError(null); 
+
+  try {
+    await axiosInstance.post('auth/register/', { username, password });
+    navigate('../login');
+  } catch (err) {
+    console.error('Registration Error:', err);
+
+    if (err.response) {
+      const status = err.response.status;
+      const data = err.response.data;
+
+      if (status === 400) {
+        // Show detailed validation or duplication errors
+        if (data.username) {
+          setError(`Username: ${data.username.join(', ')}`);
+        } else if (data.password) {
+          setError(`Password: ${data.password.join(', ')}`);
+        } else if (data.detail) {
+          setError(data.detail);
+        } else if (typeof data === 'string') {
+          setError(data);
+        } else {
+          setError('Invalid input. Please check your data.');
+        }
+      } else {
+        setError(`Unexpected error (${status}). Please try again.`);
+      }
+    } else {
+      setError('Server unreachable. Please try again later.');
     }
-  };
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-900">
@@ -34,16 +63,22 @@ const Register = () => {
             required
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 relative">
           <label className="block mb-2 text-gray-300" htmlFor="password">Password</label>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded"
+            className="border border-gray-600 bg-gray-700 text-white p-2 w-full rounded pr-10"
             required
           />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute transform translate-y-3 -translate-x-6 cursor-pointer text-gray-400"
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
         <button
           type="submit"
