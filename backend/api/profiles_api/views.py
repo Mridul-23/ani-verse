@@ -31,6 +31,15 @@ class UserProfileView(APIView):
         serializer = UserProfileSerializer(user_profile, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def patch(self, request):
+        profile = UserProfile.objects.get(user=request.user)
+        serializer = UserProfileSerializer(
+          profile, data=request.data, partial=True, context={'request':request}
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
 
 class UserFavouritesShows(generics.ListCreateAPIView):
     """
