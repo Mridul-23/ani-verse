@@ -91,3 +91,10 @@ body::-webkit-scrollbar {
   box-shadow:  14px 14px 32px #1b1d21,
               -14px -14px 32px #1b1d21;
 }
+
+.sub-main-bg {
+  border-radius: 20px;
+  box-shadow: 
+      6px 6px 16px rgba(0, 0, 0, 0.8), 
+      -6px -6px 16px rgba(0, 0, 0, 0.1);
+}
