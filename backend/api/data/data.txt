@@ -1,0 +1,2 @@
+You can generate the data yourself.
+Refer to the jupyter notebooks of https://github.com/manoj-323/ani-verse
