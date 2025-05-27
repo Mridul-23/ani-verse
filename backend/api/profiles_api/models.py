@@ -4,16 +4,22 @@ from django.conf import settings
 from rest_framework.exceptions import ValidationError
 
 from core.models import Anime
-
+from cloudinary.models import CloudinaryField
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     age = models.IntegerField(blank=True, default=1)
     name = models.CharField(max_length=50, blank=True)
-    bio = models.CharField(max_length=100, blank=True)
-    pfp = models.ImageField(upload_to='profile_pictures/', blank=True)
-    favourite_anime = models.OneToOneField(Anime, on_delete=models.CASCADE, blank=True, null=True)
+    bio = models.TextField(blank=True)
+    pfp = CloudinaryField('Profile Pictures', blank=True, null=True)
+    favourite_anime = models.ForeignKey(
+    Anime,
+    on_delete=models.CASCADE,
+    blank=True,
+    null=True,
+    related_name='fans'
+)
 
     REQUIRED_FIELDS = ['age']
 

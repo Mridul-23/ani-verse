@@ -15,6 +15,7 @@ class UserProfileView(APIView):
 
     Methods:
     - GET: Retrieves the user's profile details.
+    - PATCH: Updates the user's profile details.
     """
     
     permission_classes = [IsAuthenticated]

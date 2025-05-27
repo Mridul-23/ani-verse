@@ -8,21 +8,50 @@ from core.serializers import GeneralAnimeCardSerializer
 
 class UserProfileSerializer(serializers.ModelSerializer):
 
-    favourite_anime = serializers.SerializerMethodField()
+    favourite_anime_name = serializers.SerializerMethodField(read_only=True)
+    favourite_anime = serializers.PrimaryKeyRelatedField(
+        queryset=Anime.objects.all(),
+        required=False,
+        allow_null=True
+    )
+
+    pfp = serializers.SerializerMethodField()
+    pfp_upload = serializers.ImageField(
+        write_only=True,
+        required=False
+    )
 
     class Meta:
         model = UserProfile
         fields = '__all__'
+        read_only_fields = ['user', "pfp"]
     
     def get_pfp(self, obj):
+        """
+        Return the absolute URL to the Cloudinary-hosted profile pic,
+        or None if not set.
+        """
         request = self.context.get('request')
-        if obj.post_image:
+        if obj.pfp:
             return request.build_absolute_uri(obj.pfp.url)
         return None
     
-    def get_favourite_anime(self, obj):
+    def update(self, instance, validated_data):
+        # Handle pfp file upload
+        upload = validated_data.pop('pfp_upload', None)
+        if upload:
+            instance.pfp = upload
+
+        # Update other fields normally
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance
+    
+    def get_favourite_anime_name(self, obj):
         if obj.favourite_anime:
-            return obj.favourite_anime.name  
+            return obj.favourite_anime.name
         return None
     
 
