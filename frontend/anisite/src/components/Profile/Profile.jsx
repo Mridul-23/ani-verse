@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { FiEdit2, FiCheck, FiX } from "react-icons/fi";
+import { FiEdit2, FiCheck, FiX, FiCamera } from "react-icons/fi";
 import AnimeListItem from "./AnimeListItem";
 import { Link } from "react-router-dom";
 
@@ -15,10 +15,16 @@ export default function Profile() {
   const [favouriteId, setFavouriteId] = useState(null);
   const [favouriteResults, setFavouriteResults] = useState([]);
 
+  const [isEditingPfp, setIsEditingPfp] = useState(false);
+  const [pfpFile, setPfpFile] = useState(null);
+  const [savingPfp, setSavingPfp] = useState(false);
+
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [savingBio, setSavingBio] = useState(false);
   const [savingFavourite, setSavingFavourite] = useState(false);
   const [error, setError] = useState(null);
+
+  const fileInputRef = useRef(null);
 
   const getProfile = async () => {
     try {
@@ -146,6 +152,41 @@ export default function Profile() {
     }
   };
 
+  const handlePfpChange = (e) => {
+    setPfpFile(e.target.files[0]);
+  };
+
+  const triggerFileSelect = () => {
+    if (fileInputRef.current) fileInputRef.current.click();
+  };
+
+  const savePfp = async () => {
+    if (!pfpFile) return;
+    setSavingPfp(true);
+    try {
+      const formData = new FormData();
+      formData.append('pfp_upload', pfpFile);
+      const { data } = await axios.patch(
+        "http://127.0.0.1:8000/user/profile/",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access")}`,
+            'Content-Type': 'multipart/form-data'
+          },
+        }
+      );
+      setUserProfileData((prev) => ({ ...prev, pfp: data.pfp }));
+      setIsEditingPfp(false);
+      setPfpFile(null);
+    } catch (err) {
+      console.error("Failed to update profile picture:", err);
+      setError("Failed to update profile picture");
+    } finally {
+      setSavingPfp(false);
+    }
+  };
+
   if (loadingProfile) {
     return <div className="flex justify-center items-center h-64">Loading...</div>;
   }
@@ -157,14 +198,47 @@ export default function Profile() {
     <div className="min-h-screen min-[900px]:mt-14 bg-gray-900 text-white py-8 px-4">
       <div className="mx-auto my-10 sm:p-6 bg-gray-800 text-white max-w-6xl rounded-lg shadow-lg p-6">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-          <div className="ml-10 mt-5 gap-5 flex-shrink-0 text-center flex flex-col md:text-left">
-            <div className="w-32 h-32 sm:w-40 sm:h-40 mx-auto md:mx-0 border-4 border-white rounded-full overflow-hidden shadow-lg">
+          <div className="relative ml-10 mt-5 gap-5 flex-shrink-0 text-center flex flex-col md:text-left">
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={(e) => {
+                handlePfpChange(e);
+                setIsEditingPfp(true);
+              }}
+              className="hidden"
+            />
+            <div className="w-32 h-32 sm:w-44 sm:h-44 mx-auto md:mx-0 border-2 border-slate-950 rounded-full overflow-hidden shadow-lg">
               <img
                 src={userProfileData.pfp}
                 alt="Profile"
                 className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
               />
             </div>
+            {isEditingPfp ? (
+              <div className="mt-4 flex items-center space-x-2">
+                <FiCheck
+                  size={20}
+                  className={`cursor-pointer hover:text-green-300 ${savingPfp ? 'opacity-50 cursor-wait' : ''}`}
+                  onClick={async () => {
+                    await savePfp();
+                    setIsEditingPfp(false);
+                  }}
+                /> 
+                <FiX
+                  size={20}
+                  className="cursor-pointer hover:text-red-300"
+                  onClick={() => { setIsEditingPfp(false); setPfpFile(null); }}
+                />
+              </div>
+            ) : (
+              <FiCamera
+                size={30}
+                className="absolute right-0 sm:right-20 cursor-pointer rounded-full p-1 bg-gray-700 hover:bg-gray-600"
+                onClick={triggerFileSelect}
+              />
+            )}
             <div className="mt-5 sm:w-[16.5rem]">
               <p className="uppercase monster font-semibold">Favourite Anime:</p>
               {isEditingFavourite ? (
@@ -232,7 +306,7 @@ export default function Profile() {
                   {userProfileData.favourite_anime_name ? (
                     <Link
                       to={`/anime/details/${favouriteId}`}
-                      className="inline-block shadow-md bg-gradient-to-tl from-[#194041] to-[#078e8c93] hover:bg-gradient-to-br text-white px-3 py-1 rounded-md text-sm whitespace-nowrap overflow-hidden overflow-ellipsis"
+                      className="inline-block shadow-md bg-gradient-to-tl from-[#194041] to-[#078e8c93] hover:bg-gradient-to-br text-white px-3 py-1 rounded-md whitespace-nowrap overflow-hidden overflow-ellipsis"
                     >
                       {userProfileData.favourite_anime_name}
                     </Link>
@@ -265,7 +339,7 @@ export default function Profile() {
               {isEditingBio ? (
                 <div className="relative">
                   <textarea
-                    className="resize-none scroll-none w-full h-36 p-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+                    className="resize-none scroll-none w-full h-36 p-2 pr-12 bg-gray-900 border border-gray-600 rounded-md text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none"
                     value={bioInput}
                     onChange={(e) => setBioInput(e.target.value)}
                     maxLength={500}
@@ -279,7 +353,7 @@ export default function Profile() {
                   </div>
                 </div>
               ) : (
-                <p className="text-sm mt-1 w-[90%] overflow-auto scroll-none text-gray-300 h-36">
+                <p className="text-sm mt-1 w-[90%] overflow-auto scroll-none text-gray-300">
                   {userProfileData.bio || "No bio added yet."}
                 </p>
               )}
