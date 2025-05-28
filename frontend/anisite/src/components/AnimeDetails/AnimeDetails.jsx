@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { BsCollectionFill } from "react-icons/bs";
 import { animeSimpleRecommendation } from "../../utils/api";
+import BASE_URL from "../../../config";
 
 import "./AnimeDetails.css";
 import GenreSlider from "../Home/GenreSlider";
@@ -23,7 +24,7 @@ const AnimeDetails = () => {
       if (!fav) {
         // Add to favorites
         const response = await axios.post(
-          "http://127.0.0.1:8000/user/favourite/",
+          `${BASE_URL}/user/favourite/`,
           { id : id, anime: anime.unique_id } ,{
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access")}`,
@@ -37,7 +38,7 @@ const AnimeDetails = () => {
         }
       } else {
         const response = await axios.delete(
-          `http://127.0.0.1:8000/user/anime/remove/favourite/`,
+          `${BASE_URL}/user/anime/remove/favourite/`,
           { 
             data: {id : id, anime: anime.unique_id} , 
             headers: {
@@ -64,7 +65,7 @@ const AnimeDetails = () => {
       if (!later) {
         // Add to Watch later
         const response = await axios.post(
-          "http://127.0.0.1:8000/user/watch_later/",
+          `${BASE_URL}/user/watch_later/`,
           { id : id, anime: anime.unique_id } ,{
             headers: {
               Authorization: `Bearer ${localStorage.getItem("access")}`,
@@ -78,7 +79,7 @@ const AnimeDetails = () => {
         }
       } else {
         const response = await axios.delete(
-          `http://127.0.0.1:8000/user/anime/remove/watch_later/`,
+          `${BASE_URL}/user/anime/remove/watch_later/`,
           { 
             data: {id : id, anime: anime.unique_id} , 
             headers: {
@@ -131,7 +132,7 @@ const AnimeDetails = () => {
 const checkStatus = async () => {
   try {
     const response = await axios.get(
-      `http://127.0.0.1:8000/user/check_status/${id}`,
+      `${BASE_URL}/user/check_status/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access")}`

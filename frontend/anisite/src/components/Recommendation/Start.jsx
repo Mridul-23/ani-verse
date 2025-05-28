@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
+import BASE_URL from "../../../config";
 
 const Start = () => {
   const [recommendations, setRecommendations] = useState([]);
@@ -13,7 +14,7 @@ const Start = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get("http://127.0.0.1:8000/recommendations/", {
+      const response = await axios.get(`${BASE_URL}/recommendations/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access")}`,
         },
@@ -47,7 +48,7 @@ const Start = () => {
 
     try {
       await axios.post(
-        "http://127.0.0.1:8000/recommendations/",
+        `${BASE_URL}/recommendations/`,
         {
           show_ids: Object.keys(ratings),
           show_ratings: Object.values(ratings),

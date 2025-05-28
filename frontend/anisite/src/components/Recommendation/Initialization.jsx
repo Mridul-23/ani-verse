@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../../../config";
 
 const Initialization = () => {
   const [animes, setAnimes] = useState([
@@ -13,7 +14,7 @@ const Initialization = () => {
   // Fetch anime list based on search query for specific anime input
   const fetchAnimeList = async (index, query) => {
     try {
-      const animeData = await axios.get(`http://127.0.0.1:8000/search_anime/?anime_name=${query}`);
+      const animeData = await axios.get(`${BASE_URL}/search_anime/?anime_name=${query}`);
       const updatedAnimes = [...animes];
       updatedAnimes[index].results = animeData.data; // Store search results for that input
       setAnimes(updatedAnimes);
@@ -25,7 +26,7 @@ const Initialization = () => {
   useEffect(() => {
     (async () => {
     try {
-      await axios.delete('http://127.0.0.1:8000/recommendations/initialize/', {
+      await axios.delete(`${BASE_URL}/recommendations/initialize/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access')}`,
         },
@@ -86,7 +87,7 @@ const Initialization = () => {
 
     try {
       const postResponse = await axios.post(
-        "http://127.0.0.1:8000/recommendations/initialize/", {
+        `${BASE_URL}/recommendations/initialize/`, {
         show_ids: showIds,
         show_ratings: showRatings,
       }, {

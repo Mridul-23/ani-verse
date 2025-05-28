@@ -3,6 +3,7 @@ import axios from "axios";
 import { FiEdit2, FiCheck, FiX, FiCamera } from "react-icons/fi";
 import AnimeListItem from "./AnimeListItem";
 import { Link } from "react-router-dom";
+import BASE_URL from "../../../config";
 
 export default function Profile() {
   const [userProfileData, setUserProfileData] = useState({});
@@ -29,7 +30,7 @@ export default function Profile() {
   const getProfile = async () => {
     try {
       setLoadingProfile(true);
-      const response = await axios.get("http://127.0.0.1:8000/user/profile/", {
+      const response = await axios.get(`${BASE_URL}/user/profile/`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("access")}` },
       });
       setUserProfileData(response.data);
@@ -51,7 +52,7 @@ export default function Profile() {
 
   const fetchFavourite = async () => {
     try {
-      const { data } = await axios.get("http://127.0.0.1:8000/user/favourite/", {
+      const { data } = await axios.get(`${BASE_URL}/user/favourite/`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("access")}` },
       });
       setUserProfileData((prev) => ({ ...prev, saved_anime: data }));
@@ -62,7 +63,7 @@ export default function Profile() {
 
   const fetchWatchLater = async () => {
     try {
-      const { data } = await axios.get("http://127.0.0.1:8000/user/watch_later/", {
+      const { data } = await axios.get(`${BASE_URL}/user/watch_later/`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("access")}` },
       });
       setUserProfileData((prev) => ({ ...prev, watchLater_anime: data }));
@@ -95,7 +96,7 @@ export default function Profile() {
   const fetchFavouriteList = async (query) => {
     try {
       const animeData = await axios.get(
-        `http://127.0.0.1:8000/search_anime/?anime_name=${encodeURIComponent(query)}`
+        `${BASE_URL}/search_anime/?anime_name=${encodeURIComponent(query)}`
       );
       setFavouriteResults(animeData.data);
     } catch (err) {
@@ -117,7 +118,7 @@ export default function Profile() {
     setSavingFavourite(true);
     try {
       const { data } = await axios.patch(
-        "http://127.0.0.1:8000/user/profile/",
+        `${BASE_URL}/user/profile/`,
         { favourite_anime: favouriteId },
         { headers: { Authorization: `Bearer ${localStorage.getItem("access")}` } }
       );
@@ -139,7 +140,7 @@ export default function Profile() {
     try {
       setSavingBio(true);
       const { data } = await axios.patch(
-        "http://127.0.0.1:8000/user/profile/",
+        `${BASE_URL}/user/profile/`,
         { bio: bioInput },
         { headers: { Authorization: `Bearer ${localStorage.getItem("access")}` } }
       );
@@ -167,7 +168,7 @@ export default function Profile() {
       const formData = new FormData();
       formData.append('pfp_upload', pfpFile);
       const { data } = await axios.patch(
-        "http://127.0.0.1:8000/user/profile/",
+        `${BASE_URL}/user/profile/`,
         formData,
         {
           headers: {

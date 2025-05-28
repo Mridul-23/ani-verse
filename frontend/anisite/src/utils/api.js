@@ -1,8 +1,9 @@
 // api.js
 import axios from 'axios';
+import BASE_URL from '../../config';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: BASE_URL,
 });
 
 export const getAnimeDetails = async (id) => {

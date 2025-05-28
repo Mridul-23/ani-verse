@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import BASE_URL from "../../config";
 
 const useGenreLoader = (genres) => {
   const [genreAnimeList, setGenreAnimeList] = useState([]);
@@ -9,7 +10,7 @@ const useGenreLoader = (genres) => {
 
       try {
         const requests = genres.map((genre) =>
-          axios.get(`http://127.0.0.1:8000/anime_by_genre/?genre=${genre}`)
+          axios.get(`${BASE_URL}/anime_by_genre/?genre=${genre}`)
         );
 
         const responses = await Promise.all(requests);

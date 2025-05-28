@@ -1,7 +1,8 @@
 import axios from 'axios';
+import BASE_URL from '../../config';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:8000/',
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -31,7 +32,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshResponse = await axios.post('http://127.0.0.1:8000/auth/token/refresh/', {
+        const refreshResponse = await axios.post(`${BASE_URL}/auth/token/refresh/`, {
           refresh: localStorage.getItem('refresh'),
         });
 
