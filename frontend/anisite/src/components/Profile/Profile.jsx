@@ -307,10 +307,12 @@ export default function Profile() {
                   {userProfileData.favourite_anime_name ? (
                     <Link
                       to={`/anime/details/${favouriteId}`}
-                      className="inline-block shadow-md bg-gradient-to-tl from-[#194041] to-[#078e8c93] hover:bg-gradient-to-br text-white px-3 py-1 rounded-md whitespace-nowrap overflow-hidden overflow-ellipsis"
+                      className="block max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] shadow-md bg-gradient-to-tl from-[#194041] to-[#078e8c93] hover:bg-gradient-to-br text-white px-3 py-1 rounded-md whitespace-nowrap overflow-hidden text-ellipsis"
+                      title={userProfileData.favourite_anime_name}
                     >
                       {userProfileData.favourite_anime_name}
                     </Link>
+
                   ) : (
                     <span className="inline-block bg-teal-900 text-white px-3 py-1 rounded-md text-sm whitespace-nowrap overflow-hidden overflow-ellipsis">
                       No favourite anime added
