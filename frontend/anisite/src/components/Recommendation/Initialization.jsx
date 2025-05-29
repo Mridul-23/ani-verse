@@ -112,34 +112,38 @@ const Initialization = () => {
     console.log(animes);
   }, [animes]);
 
-  return (
-    <div className="min-h-screen mt-14 bg-[#121212] text-gray-200 p-6">
-      <div className="max-w-3xl mx-auto bg-[#272a30] shadow-lg p-8">
-        <h1 className="text-2xl font-semibold mb-6 text-center uppercase">
-          Give us your Favorites
-        </h1>
-        {animes.map((anime, index) => (
-          <div
-            key={index}
-            className="relative flex flex-row gap-4 bg-transparent px-4 pb-4 pt-2 rounded"
-          >
-            <input
-              type="text"
-              placeholder="Anime Name"
-              value={anime.name}
-              onChange={(e) => handleInputChange(index, "name", e)}
-              className="flex-grow p-2 rounded bg-neutral-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {/* Display search results if there are any */}
-            {anime.results.length > 0 && anime.search && (
-              <div className="absolute search-scrollbar bg-neutral-800 text-gray-200 rounded mt-10 p-2 z-10 max-w-[25rem] max-h-48 overflow-y-auto">
-                {anime.results.map((item, animeIndex) => (
-                  <div
-                  to={`/anime/details/${item.unique_id}`}
-                  className="flex cursor-pointer items-center gap-4 px-4 py-3 hover:bg-[#2a2a2a] transition duration-300"
+return (
+  <div className="min-h-screen mt-14 bg-[#121212] text-gray-200 p-6">
+    <div className="max-w-3xl mx-auto bg-[#272a30] shadow-lg p-8">
+      <h1 className="text-2xl font-semibold mb-6 text-center uppercase">
+        Give us your Favorites
+      </h1>
+
+      {animes.map((anime, index) => (
+        <div
+          key={index}
+          className="relative flex flex-col sm:flex-row sm:items-start gap-4 bg-transparent px-4 pb-4 pt-2 rounded"
+        >
+          {/* Anime Name Input */}
+          <input
+            type="text"
+            placeholder="Anime Name"
+            value={anime.name}
+            onChange={(e) => handleInputChange(index, "name", e)}
+            className="w-full sm:flex-grow p-2 rounded bg-neutral-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {/* Display search results if there are any */}
+          {anime.results.length > 0 && anime.search && (
+            <div className="absolute top-full left-0 mt-2 w-full sm:w-[25rem] bg-neutral-800 text-gray-200 rounded p-2 z-10 max-h-48 overflow-y-auto search-scrollbar">
+              {anime.results.map((item, animeIndex) => (
+                <div
                   key={animeIndex}
+                  className="flex cursor-pointer items-center gap-4 px-4 py-3 hover:bg-[#2a2a2a] transition duration-300"
                   title={item.name_english}
-                  onClick={() => handleSelectAnime(index, item.name, item.unique_id)}
+                  onClick={() =>
+                    handleSelectAnime(index, item.name, item.unique_id)
+                  }
                 >
                   <img
                     src={item.imagelink}
@@ -155,36 +159,39 @@ const Initialization = () => {
                     </span>
                   </div>
                 </div>
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
+          )}
 
-            <input
-              type="number"
-              placeholder="Rating (1-5)"
-              value={anime.rating}
-              min={1}
-              max={5}
-              onChange={(e) => handleInputChange(index, "rating", e)}
-              className="flex-grow p-2 rounded bg-neutral-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        ))}
-        <button
-          onClick={addAnimeComponent}
-          className="w-full mt-4 bg-gray-700 hover:bg-neutral-900 duration-300 text-gray-100 font-semibold py-2 px-4 rounded mb-4"
-        >
-          + Add Anime
-        </button>
-        <button
-          onClick={handleSubmit}
-          className="w-full bg-slate-700 hover:bg-gray-900 duration-300 text-gray-200 font-semibold py-2 px-4 rounded"
-        >
-          GetRec
-        </button>
-      </div>
+          {/* Rating Input */}
+          <input
+            type="number"
+            placeholder="Rating (1-5)"
+            value={anime.rating}
+            min={1}
+            max={5}
+            onChange={(e) => handleInputChange(index, "rating", e)}
+            className="w-full sm:flex-grow p-2 rounded bg-neutral-900 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      ))}
+
+      <button
+        onClick={addAnimeComponent}
+        className="w-full mt-4 bg-gray-700 hover:bg-neutral-900 duration-300 text-gray-100 font-semibold py-2 px-4 rounded mb-4"
+      >
+        + Add Anime
+      </button>
+      <button
+        onClick={handleSubmit}
+        className="w-full bg-slate-700 hover:bg-gray-900 duration-300 text-gray-200 font-semibold py-2 px-4 rounded"
+      >
+        GetRec
+      </button>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Initialization;
