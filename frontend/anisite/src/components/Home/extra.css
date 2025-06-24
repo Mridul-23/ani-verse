@@ -65,3 +65,27 @@
 .group:hover .overlay-hover {
   opacity: 1;
 }
+
+
+.loader-box {
+  margin: 2rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 5px solid #eee;
+  border-top: 5px solid transparent;
+  border-image: linear-gradient(90deg, #dc80f3, #c500b8, #ff4364) 1;
+  animation: simple-spin 1.5s ease infinite;
+  box-sizing: border-box;
+}
+
+.loader-text {
+  background: linear-gradient(90deg, #ff4364, #c500b8, #dc80f3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes simple-spin {
+  to { transform: rotate(360deg); }
+}
