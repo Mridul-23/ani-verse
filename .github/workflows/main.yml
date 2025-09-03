@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Django tests
         run: |
-          cd backend
+          cd backend/api
           python manage.py test
 
   frontend-build:
