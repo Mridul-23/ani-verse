@@ -58,30 +58,28 @@ This repository contains the deployed code, configuration and deployment manifes
 ```mermaid
 flowchart TD
   subgraph "Scrape & Data"
-    A["Ani-Spider (Scrapy)"] --> B["Raw Dataset (Storage / S3 / Kaggle snapshot)"]
+    A["Ani-Spider (Scrapy)"] --> B["Raw Dataset (Storage / Kaggle snapshot)"]
   end
 
   subgraph "Processing"
     B --> C["Preprocessing (Pandas, NLTK)"]
-    C --> D["Batching Service (Chunked embedding jobs)"]
-    D --> E["Embedding Workers (BERT — CPU/GPU workers)"]
-    E --> F["FAISS Index (ANN index files)"]
-    F --> G["Index Updater (snapshot & swap)"]
+    C --> D["Embeddings Generation (BERT)"]
+    D --> E["FAISS Index (ANN index files)"]
   end
 
   subgraph "Backend & Intelligence"
-    G --> H["DRF Backend API (Django REST Framework)"]
-    H --> I["LinUCB RL Service (Realtime personalization)"]
-    I --> H
-    H --> Postgres[("Postgres (Supabase)")]
-    H --> Cloudinary[("Cloudinary Media Storage")]
+    E --> F["DRF Backend API (Django REST Framework)"]
+    F --> G["LinUCB RL Service (Realtime personalization)"]
+    G --> F
+    F --> Postgres[("Postgres (Supabase)")]
+    F --> Cloudinary[("Cloudinary Media Storage")]
   end
 
   subgraph "Frontend & Users"
-    H --> J["React Frontend (Vercel)"]
-    J --> Users["End Users"]
+    F --> H["React Frontend (Vercel)"]
+    H --> Users["End Users"]
     Users --> Feedback["Feedback Streams (clicks, ratings, watchlist)"]
-    Feedback --> I
+    Feedback --> G
   end
 
 
@@ -145,7 +143,7 @@ git clone https://github.com/YOUR_USERNAME/ani-verse.git
 cd ani-verse
 ```
 
-1. **Copy env template and edit**
+2. **Copy env template and edit**
 
 ```bash
 cd backend/api
@@ -153,7 +151,7 @@ cp .env.example .env
 # Edit .env to point DATABASE_URL, CLOUDINARY_URL, FAISS_INDEX_PATH, etc.
 ```
 
-1. **Backend (recommended: virtualenv)**
+3. **Backend (recommended: virtualenv)**
 
 ```bash
 # Considering you're already in backend folder
@@ -165,7 +163,7 @@ python manage.py createsuperuser  # optional but recommended
 python manage.py runserver
 ```
 
-1. **Frontend**
+4. **Frontend**
 
 ```bash
 cd ../../frontend/anisite
@@ -173,7 +171,7 @@ npm install
 npm run dev
 ```
 
-1. **FAISS Index**
+5. **FAISS Index**
 
 - The Dev repo already has the detailed Jupyter Notebook for creating BERT Embeddings & FAISS Index easily. Check the Notebook for [BERT Embeddings](https://github.com/manoj-323/ani-verse/blob/main/backend/embeddings/experiment/bert_practice.ipynb) and [FAISS Index](https://github.com/manoj-323/ani-verse/blob/main/backend/embeddings/experiment/faiss.ipynb) from these links directly.
 
