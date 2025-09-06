@@ -3,20 +3,24 @@ name: Repo Visualizer
 on:
   push:
     branches:
-      - main
+      - main  # Trigger when main is updated
 
 jobs:
   generate-diagram:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2. Generate repo visualization
       - name: Generate repo visualization
         uses: githubocto/repo-visualizer@0.9.1
         with:
           output_file: repo-diagram.svg
 
+      # 3. Upload artifact (optional)
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -24,31 +28,35 @@ jobs:
           path: repo-diagram.svg
           retention-days: 30
 
+      # 4. Commit diagram to dedicated branch
       - name: Commit diagram to update branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Delete local branch if it exists
-          git branch -D repo-visualizer-update || echo "branch does not exist"
+          # Fetch remote update branch if it exists
+          git fetch origin repo-visualizer-update || true
           
-          # Create/update branch locally
+          # Create or switch to update branch
           git checkout -B repo-visualizer-update
           
+          # Stage and commit changes
           git add repo-diagram.svg
           git commit -m "chore(diagram): update repo visualization" || echo "No changes to commit"
           
-          # Push branch to remote (creates it if missing)
+          # Push branch to remote (create if missing)
           git push -u origin repo-visualizer-update --force
 
+      # 5. Create or update Pull Request to main
       - name: Create or update Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           branch: repo-visualizer-update
-          commit-message: "chore(diagram): update repo visualization"
+          base: main
           title: "chore: update repo visualization"
           body: "This PR automatically updates the repo visualization diagram."
-          base: main
+          commit-message: "chore(diagram): update repo visualization"
           labels: |
             automated
             visualization
+          draft: false
