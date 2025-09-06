@@ -1,2 +1,25 @@
-- name: Repo Visualizer
-  uses: githubocto/repo-visualizer@0.9.1
+name: Repo Visualizer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-diagram:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Generate repo visualization
+        uses: githubocto/repo-visualizer@0.9.1
+        with:
+          output_file: repo-diagram.svg
+          branch: main
+
+      - name: Upload diagram artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: repo-diagram
+          path: repo-diagram.svg
