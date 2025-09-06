@@ -17,21 +17,29 @@ jobs:
         with:
           output_file: repo-diagram.svg
 
-      - name: Upload visualizer diagram (artifact)
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: repo-diagram
           path: repo-diagram.svg
           retention-days: 30
 
-      - name: Commit diagram to branch
+      - name: Commit diagram to update branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # switch to or create update branch instead of main
+          
+          # Delete local branch if it exists
+          git branch -D repo-visualizer-update || echo "branch does not exist"
+          
+          # Create/update branch locally
           git checkout -B repo-visualizer-update
+          
           git add repo-diagram.svg
           git commit -m "chore(diagram): update repo visualization" || echo "No changes to commit"
+          
+          # Push branch to remote (creates it if missing)
+          git push -u origin repo-visualizer-update --force
 
       - name: Create or update Pull Request
         uses: peter-evans/create-pull-request@v6
@@ -41,8 +49,6 @@ jobs:
           title: "chore: update repo visualization"
           body: "This PR automatically updates the repo visualization diagram."
           base: main
-          labels: automated, visualization
-          signoff: true
-          draft: false
-          force: true  # ensures PR branch updates even if conflicts exist
-
+          labels: |
+            automated
+            visualization
