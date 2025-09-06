@@ -8,6 +8,10 @@ on:
 jobs:
   generate-diagram:
     runs-on: ubuntu-latest
+    # Add permissions for the job to create a PR
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       # 1. Checkout the code
@@ -59,3 +63,4 @@ jobs:
             
           # Set to false to create a ready-for-review PR
           draft: false
+
