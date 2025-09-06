@@ -28,6 +28,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # switch to or create update branch instead of main
           git checkout -B repo-visualizer-update
           git add repo-diagram.svg
           git commit -m "chore(diagram): update repo visualization" || echo "No changes to commit"
