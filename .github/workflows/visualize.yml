@@ -3,24 +3,21 @@ name: Repo Visualizer
 on:
   push:
     branches:
-      - main  # Trigger when main is updated
+      - main
 
 jobs:
   generate-diagram:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code (main)
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Generate repo visualization
       - name: Generate repo visualization
         uses: githubocto/repo-visualizer@0.9.1
         with:
           output_file: repo-diagram.svg
 
-      # 3. Upload artifact (optional)
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -28,26 +25,16 @@ jobs:
           path: repo-diagram.svg
           retention-days: 30
 
-      # 4. Commit diagram to dedicated branch
       - name: Commit diagram to update branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # Fetch remote branch if exists
           git fetch origin repo-visualizer-update || true
-          
-          # Create/switch to update branch locally
           git checkout -B repo-visualizer-update
-          
-          # Stage and commit changes
           git add repo-diagram.svg
           git commit -m "chore(diagram): update repo visualization" || echo "No changes to commit"
-          
-          # Push branch to remote
           git push -u origin repo-visualizer-update --force
 
-      # 5. Create or update Pull Request to main
       - name: Create or update Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
