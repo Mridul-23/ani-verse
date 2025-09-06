@@ -16,7 +16,6 @@ jobs:
         uses: githubocto/repo-visualizer@0.9.1
         with:
           output_file: repo-diagram.svg
-          branch: main
 
       - name: Upload visualizer diagram
         uses: actions/upload-artifact@v4
