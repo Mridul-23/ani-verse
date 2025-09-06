@@ -1,6 +1,6 @@
 # Ani-Verse — AI‑Powered Anime Recommendation Platform 🎌
 
-[![Deployment Status](https://img.shields.io/badge/status-deployed-brightgreen)](https://ani-verse.vercel.app)  [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)  
+[![Deployment Status](https://img.shields.io/badge/status-deployed-brightgreen)](https://ani-verse-amber.vercel.app)  [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)  
 
 **Production / Deployment repository** — this is the live, production‑ready Ani‑Verse codebase (frontend + backend + infrastructure glue). For the original development history and prototype work, see the related repositories (links below).
 
