@@ -41,6 +41,8 @@ jobs:
           title: "chore: update repo visualization"
           body: "This PR automatically updates the repo visualization diagram."
           base: main
-          labels: |
-            automated
-            visualization
+          labels: automated, visualization
+          signoff: true
+          draft: false
+          force: true  # ensures PR branch updates even if conflicts exist
+
