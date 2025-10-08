@@ -139,7 +139,7 @@ _The diagram above is top‑to‑bottom (TD) and highlights the full lifecycle f
 1. **Clone**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ani-verse.git
+git clone https://github.com/Mridul-23/ani-verse.git
 cd ani-verse
 ```
 
