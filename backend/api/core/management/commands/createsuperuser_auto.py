@@ -4,7 +4,7 @@ import os
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        if not User.objects.filter(username="admin").exists():
+        if not User.objects.filter(username="Admin").exists():
             User.objects.create_superuser(
                 "Admin",
                 "mridulnarula23@gmail.com",
