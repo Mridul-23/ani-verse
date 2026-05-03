@@ -1,8 +1,13 @@
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import ListAPIView
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+
+from django.db import connection
+
+import random
 
 from .serializers import GeneralAnimeCardSerializer, SearchRequestAnimeSerializer, AnimeDetailSerializer
 from .models import Anime
@@ -10,7 +15,30 @@ from .mixins import GenreFilterMixin
 from core.models import Genre
 
 
+class HealthCheckView(APIView):
+    """
+    Returns the health check status on pinging.
 
+    Permissions:
+        - AllowAny
+    """
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT 1")
+            return Response({
+                "status": "alive",
+                "db": "connected"
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                "status": "error",
+                "db": "disconnected",
+                "message": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class HomeFeed(ListAPIView):
@@ -25,7 +53,11 @@ class HomeFeed(ListAPIView):
     queryset = Anime.objects.all()
 
     def get_queryset(self):
-        return self.queryset.filter(ranked__lt=11).order_by('?').distinct()[:10]
+        ids = list(
+            self.queryset.filter(ranked__lt=11).values_list('id', flat=True)
+        )
+        selected_ids = random.sample(ids, min(len(ids), 10))
+        return self.queryset.filter(id__in=selected_ids)
 
 
 class ShowsByGenre(GenreFilterMixin, ListAPIView):
