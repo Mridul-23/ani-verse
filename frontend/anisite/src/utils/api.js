@@ -9,7 +9,7 @@ const api = axios.create({
 export const getAnimeDetails = async (id) => {
   try {
     const response = await api.get(`/anime_details/?id=${id}`);
-    return response.data[0];
+    return response.data;
   } catch (error) {
     throw new Error('Failed to fetch anime details: ' + error.message);
   }
