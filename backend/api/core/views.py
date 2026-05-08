@@ -6,6 +6,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 from django.db import connection
+from django.shortcuts import get_object_or_404
 
 import random
 
@@ -54,10 +55,10 @@ class HomeFeed(ListAPIView):
 
     def get_queryset(self):
         ids = list(
-            self.queryset.filter(ranked__lt=11).values_list('id', flat=True)
+            self.queryset.filter(ranked__lt=11).values_list('unique_id', flat=True)
         )
         selected_ids = random.sample(ids, min(len(ids), 10))
-        return self.queryset.filter(id__in=selected_ids)
+        return self.queryset.filter(unique_id__in=selected_ids)
 
 
 class ShowsByGenre(GenreFilterMixin, ListAPIView):
@@ -97,7 +98,7 @@ class ShowsByGenre(GenreFilterMixin, ListAPIView):
 
             return Response(
                 {'message': "No genre provided, returning."}, 
-                status=status.HTTP_204_NO_CONTENT
+                status=status.HTTP_400_BAD_REQUEST
             )
 
         return super().list(request, *args, **kwargs)
@@ -118,7 +119,7 @@ class ExplorePageAnimeView(ListAPIView):
     queryset = Anime.objects.all()
 
     def get_queryset(self):
-        query_str = self.request.query_params.get('anime_name', '')
+        query_str = self.request.query_params.get('anime_name', '').strip()
 
         # Validation: Ensure the search query is not empty
         if not query_str:
@@ -143,7 +144,7 @@ class SearchAnimeView(ListAPIView):
     queryset = Anime.objects.all()
 
     def get_queryset(self):
-        query_str = self.request.query_params.get('anime_name', '')
+        query_str = self.request.query_params.get('anime_name', '').strip()
 
         # Validation: Ensure the search query is not empty
         if not query_str:
@@ -154,7 +155,7 @@ class SearchAnimeView(ListAPIView):
 
 
 
-class GetAnimeById(ListAPIView):
+class GetAnimeById(APIView):
     """
     Return details of a single anime by id.
 
@@ -165,12 +166,21 @@ class GetAnimeById(ListAPIView):
         - Query parameter: /?id=<int>
     """
     permission_classes = [AllowAny]
-    serializer_class = AnimeDetailSerializer
+    
+    def get(self, request):
+        anime_id = request.query_params.get('id', '').strip()
 
-    def get_queryset(self):
-        try:
-            q = Anime.objects.filter(unique_id=self.request.query_params.get('id'))
-            return q
-        except Anime.DoesNotExist:
-            return None
+        if not anime_id:
+            raise ValidationError(
+                "The 'id' query parameter is required."
+            )
+            
+        anime = get_object_or_404(
+            Anime,
+            unique_id=anime_id
+        )
+
+        serializer = AnimeDetailSerializer(anime)
+
+        return Response(serializer.data)
         
