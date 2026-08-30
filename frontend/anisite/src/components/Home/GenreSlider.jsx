@@ -6,7 +6,7 @@ const GenreSlider = ({
   genres,
   heading = "Explore by Genre",
   head_size = "4",
-  styles = "w-screen from-[#0f0f0f] to-[#1f1f1f]",
+  styles = "w-screen from-[#0f0f0f] via-[#1f1f1f] to-[#0f0f0f]",
 }) => {
   return (
     <section className={`py-10 px-5 ${styles} bg-gradient-to-b`}>

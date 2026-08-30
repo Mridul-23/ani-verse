@@ -38,17 +38,25 @@ function Home() {
       />
 
       <Hcon
-        captions={"Welcome Senpai"} 
+        captions={"Anime Awaits"}
         gradient={{from: "#dc80f3", via: "#c500b8", to: "#ff4364"}}
-        flex='flex-col gap-10'
-        content='Aniverse is your ready to go All-in-One Anime Platform. Discover and Interact with the Anime Community. Get the latest updates on your favorite Anime Series and Movies.'
-        content2='Explore the world of Anime with Aniverse'
+        styles='flex-col gap-10'
+        content='Discover anime through intelligent recommendations, powerful search, and genre-based exploration. Find familiar favorites, uncover something new, and explore a catalogue built around what you enjoy watching.'
+        content2='Your next favorite is calling out for you.'
       />
 
       {backendCold ? (
         <AnimeLoader />
       ) : (
+        <>
         <GenreSlider genres={genreAnimeList} />
+        <Hcon
+          captions="Keep Exploring"
+          styles="flex-col-reverse md:flex-row-reverse pb-20"
+          content="There is always another anime waiting to be discovered."
+          content2="Browse, search, and follow your curiosity wherever it takes you. The Ani-Verse is yours to explore."
+          />
+        </>
       )}
     </main>
   );

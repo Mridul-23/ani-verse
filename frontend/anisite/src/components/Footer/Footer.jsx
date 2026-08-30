@@ -11,7 +11,7 @@ function Footer() {
             Aniverse
           </h1>
           <p className="text-gray-400 mt-2 max-w-md">
-            Your All-in-One Anime Platform. Explore. Discover. Interact.
+            Discover anime. Find your next favorite.
           </p>
         </div>
 
